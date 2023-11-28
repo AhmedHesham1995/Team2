@@ -245,6 +245,17 @@ const ProfileReplies = () => {
   const [replies, setReplies] = useState([]);
   const [userData, setUserData] = useState(null);
 
+  const getUser = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem("ID")}`);
+      var userData = response.data.data;
+      setUserData(userData);
+    } catch (error) {
+      console.error('Error get user:', error);
+    }
+  };
+  getUser();
+
   useEffect(() => {
     const fetchReplies = async () => {
       try {
@@ -306,16 +317,7 @@ const ProfileReplies = () => {
     }
   };
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem("ID")}`);
-      var userData = response.data.data;
-      setUserData(userData);
-    } catch (error) {
-      console.error('Error get user:', error);
-    }
-  };
-  getUser();
+  
 
   return (
     <div>

@@ -102,12 +102,14 @@ const usersSchema = mongoose.Schema({
         unique: true,
         minLength: 3
     },
-    likedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
-
     location: {
         type: String,
         maxlength: 20
     },
+    gender: {
+        type: String,
+        enum: ['male', 'female'], 
+      },
     bio: {
         type: String,
         maxlength: 140

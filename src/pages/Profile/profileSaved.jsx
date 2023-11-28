@@ -733,6 +733,25 @@ const ProfileSaved = () => {
   };
 
 
+  // const handleReply = async () => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.put(
+  //       `http://localhost:4005/posts/`,
+  //       { text: replyText, postId: selectedPost, userId: localStorage.getItem("ID") },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setReplyText('');
+  //     fetchReplies(selectedPost);
+  //   } catch (error) {
+  //     console.error('Error replying to post:', error.message);
+  //   }
+  // };
+
   const handleReply = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -747,10 +766,16 @@ const ProfileSaved = () => {
       );
       setReplyText('');
       fetchReplies(selectedPost);
+  
+      // Show a success toast
+      toast.success('Reply added successfully!');
     } catch (error) {
       console.error('Error replying to post:', error.message);
+      // Show an error toast
+      toast.error('Error adding reply. Please try again.');
     }
   };
+  
 
   const fetchUserDetails = async (userId) => {
     try {
@@ -843,7 +868,7 @@ const ProfileSaved = () => {
     }
   };
 
-  const handleDeletePost = async (postId) => {
+  const handleDeleteSpecificPost = async (postId) => {
     // Show SweetAlert confirmation
     const isConfirmed = await Swal.fire({
       title: 'Are you sure?',
@@ -878,17 +903,18 @@ const ProfileSaved = () => {
           <div className="center__post" key={post._id}>
             <div className="center__post__header">
               <div className="center__post__header-left">
-                <img src={post.userProfilePicture} alt="" />
+                <img src={post.userId.profilePicture} alt="" />
                 <span className="center__post__header-left__name">{post.userId && post.userId.name}</span>
                 <span className="center__post__header-left__user">
                   @{post.userId && post.userId.username} . {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
                 </span>
               </div>
               <div className="center__post__header-right">
-                <span>
-                <i onClick={() => handleDeletePost(post._id)} className="fas fa-ellipsis svg" ></i>
-
-                </span>
+              {post.userId && post.userId._id === localStorage.getItem('ID') && (
+                  <span className="center__post__bottom-span">
+                    <i onClick={() => handleDeleteSpecificPost(post._id)} className="fas fa-ellipsis svg" ></i>
+                  </span>
+                )}
               </div>
             </div>
             <div className="center__post__body">
