@@ -1761,6 +1761,26 @@ const ProfilePosts = () => {
     fetchReplies(postId);
   };
 
+  // const handleReply = async () => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.put(
+  //       `http://localhost:4005/posts/`,
+  //       { text: replyText, postId: selectedPost, userId: localStorage.getItem("ID") },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setReplyText('');
+  //     fetchReplies(selectedPost);
+  //   } catch (error) {
+  //     console.error('Error replying to post:', error.message);
+  //   }
+  // };
+
+
   const handleReply = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -1775,10 +1795,16 @@ const ProfilePosts = () => {
       );
       setReplyText('');
       fetchReplies(selectedPost);
+  
+      // Show a success toast
+      toast.success('Reply added successfully!');
     } catch (error) {
       console.error('Error replying to post:', error.message);
+      // Show an error toast
+      toast.error('Error adding reply. Please try again.');
     }
   };
+  
 
   const fetchUserDetails = async (userId) => {
     try {
@@ -1907,7 +1933,7 @@ const ProfilePosts = () => {
           <div className="center__post" key={post._id}>
           <div className="center__post__header">
             <div className="center__post__header-left">
-              <img src={post.userProfilePicture} alt="" />
+            <img src={post.userId.profilePicture} alt="" />
               <span className="center__post__header-left__name">{post.userId && post.userId.name}</span>
               <span className="center__post__header-left__user">
                 @{post.userId && post.userId.username} . {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}

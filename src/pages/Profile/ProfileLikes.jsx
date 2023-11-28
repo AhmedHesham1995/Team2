@@ -974,6 +974,8 @@ import { faComment, faRetweet, faHeart, faChartBar, faArrowUp,faBookmark } from 
 import { formatDistanceToNow } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';  // Import SweetAlert
+
 const ProfileLikes = () => {
   const userId = localStorage.getItem('ID');
   const [likedPosts, setLikedPosts] = useState([]);
@@ -1018,6 +1020,25 @@ const ProfileLikes = () => {
   };
 
 
+  // const handleReply = async () => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.put(
+  //       `http://localhost:4005/posts/`,
+  //       { text: replyText, postId: selectedPost, userId: localStorage.getItem("ID") },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setReplyText('');
+  //     fetchReplies(selectedPost);
+  //   } catch (error) {
+  //     console.error('Error replying to post:', error.message);
+  //   }
+  // };
+
   const handleReply = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -1032,10 +1053,16 @@ const ProfileLikes = () => {
       );
       setReplyText('');
       fetchReplies(selectedPost);
+  
+      // Show a success toast
+      toast.success('Reply added successfully!');
     } catch (error) {
       console.error('Error replying to post:', error.message);
+      // Show an error toast
+      toast.error('Error adding reply. Please try again.');
     }
   };
+  
 
   const fetchUserDetails = async (userId) => {
     try {
@@ -1129,6 +1156,29 @@ const ProfileLikes = () => {
       console.error('Error', error.message);
     }
   };
+
+  const handleDeleteSpecificPost = async (postId) => {
+    // Show SweetAlert confirmation
+    const isConfirmed = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this post!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+      reverseButtons: true,
+    });
+
+    if (isConfirmed.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:4005/posts/${postId}`);
+        fetchLikedPosts();
+        Swal.fire('Deleted!', 'Your post has been deleted.', 'success');
+      } catch (error) {
+        console.error('Error', error.message);
+      }
+    }
+  };
   
 
   return (
@@ -1141,16 +1191,18 @@ const ProfileLikes = () => {
           <div className="center__post" key={post._id}>
           <div className="center__post__header">
             <div className="center__post__header-left">
-              <img src={post.userProfilePicture} alt="" />
+            <img src={post.userId.profilePicture} alt="" />
               <span className="center__post__header-left__name">{post.userId && post.userId.name}</span>
               <span className="center__post__header-left__user">
                 @{post.userId && post.userId.username} . {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
               </span>
             </div>
             <div className="center__post__header-right">
-              <span>
-                <i className="fas fa-ellipsis svg"></i>
-              </span>
+                {post.userId && post.userId._id === localStorage.getItem('ID') && (
+                  <span className="center__post__bottom-span">
+                    <i onClick={() => handleDeleteSpecificPost(post._id)} className="fas fa-ellipsis svg" ></i>
+                  </span>
+                )}
             </div>
           </div>
           <div className="center__post__body">

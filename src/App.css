@@ -1680,3 +1680,10 @@ hr {
 .reply-container{
   margin: 15px 0;
 }
+
+
+.center__post__bottom-span-reply{
+  margin-left: 15px;
+  color: gray;
+  cursor: pointer;
+}

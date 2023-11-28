@@ -209,12 +209,210 @@
 
 
 
-import { useState } from 'react';
+// import { useState } from 'react';
+// import { NavLink, useNavigate } from 'react-router-dom';
+// // import Swal from 'sweetalert2';
+// // import withReactContent from 'sweetalert2-react-content';
+// import { register } from '../services/auth';
+// // const MySwal = withReactContent(Swal);
+
+// const SignUp = () => {
+//   const navigate = useNavigate();
+
+//   const [user, setUser] = useState({
+//     name: '',
+//     email: '',
+//     password: '',
+//     confirmPassword: '',
+//     username: '', // Add this line
+//   });
+
+//   const [errors, setErrors] = useState({
+//     nameError: '',
+//     emailError: '',
+//     passwordError: '',
+//     confirmPasswordError: '',
+//     usernameError: '', // Add this line
+//   });
+
+//   const [showPassword, setShowPassword] = useState(false);
+
+//   const togglePasswordVisibility = () => {
+//     setShowPassword(!showPassword);
+//   };
+
+//   const handleChange = (evt) => {
+//     const { name, value } = evt.target;
+//     setUser({ ...user, [name]: value });
+
+//     switch (name) {
+//       case 'name':
+//         setErrors({
+//           ...errors,
+//           nameError: value.length === 0 ? 'Name is required' : value.length < 3 ? 'Name must be at least 3 characters' : '',
+//         });
+//         break;
+//       case 'email':
+//         const emailRegix = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//         setErrors({
+//           ...errors,
+//           emailError: value.length === 0 ? 'Email is required' : emailRegix.test(value) ? '' : 'Invalid Email',
+//         });
+//         break;
+//       case 'password':
+//         const passwordRegex = /^.{8,}$/;
+//         setErrors({
+//           ...user,
+//           passwordError: value.length === 0 ? 'Password is required' : passwordRegex.test(value) ? '' : 'More than 8 characters',
+//         });
+//         break;
+//       case 'confirmPassword':
+//         setErrors({
+//           ...errors,
+//           confirmPasswordError: value.length === 0 ? '' : value !== user.password ? 'Passwords do not match' : '',
+//         });
+//         break;
+//       case 'username': // Add this case
+//         setErrors({
+//           ...errors,
+//           usernameError: value.length === 0 ? 'Username is required' : value.length < 3 ? 'Username must be at least 3 characters' : '',
+//         });
+//         break;
+//       default:
+//         break;
+//     }
+//   };
+
+//   const handleSubmit = async (ev) => {
+//     ev.preventDefault();
+//     if (errors.nameError || errors.emailError || errors.passwordError || errors.usernameError) {
+//       // MySwal.fire({
+//       //   icon: 'error',
+//       //   title: 'Validation Error',
+//       //   text: 'Please correct the form errors.',
+//       // });
+//     } else {
+//       try {
+//         const res = await register(user);
+//         console.log(res);
+//         navigate('/signIn');
+//       } catch (err) {
+//         // MySwal.fire({
+//         //   icon: 'error',
+//         //   title: 'Something went wrong',
+//         //   text: 'Please correct the form errors.',
+//         // });
+//       }
+//     }
+//   };
+
+//   return (
+//     <>
+//       <form onSubmit={handleSubmit} className="bg-dark text-center align-items-center justify-content-center d-flex">
+//         <div className="container col-lg-5 col-md-8 col-sm-10">
+//           <div className="BBG bg-black rounded-5">
+//             <div className="d-flex flex-row bd-highlight ">
+//               <div className="col d-flex align-items-center justify-content-center">
+//                 <div className="d-grid gap-4 text-white">
+//                   <br />
+//                   <h2 className=''>Create your account</h2>
+
+//                   <div>
+//                     <input
+//                       type="text"
+//                       className={` form-control ${(errors.nameError) ? 'is-invalid' : 'text-dark'}`}
+//                       name='name'
+//                       placeholder="Enter your name"
+//                       value={user.name}
+//                       onChange={handleChange}
+//                     />
+//                     <div className="invalid-feedback">{errors.nameError}</div>
+//                   </div>
+
+//                   <div>
+//                     <input
+//                       type="text"
+//                       className={`form-control ${(errors.emailError) ? 'is-invalid' : 'text-dark'}`}
+//                       name='email'
+//                       placeholder="Enter your email"
+//                       value={user.email}
+//                       onChange={handleChange}
+//                     />
+//                     <div className='invalid-feedback'>{errors.emailError}</div>
+//                   </div>
+
+//                   <div>
+//                     <input
+//                       className={`form-control ${(errors.passwordError) ? 'is-invalid' : 'text-dark'}`}
+//                       type={showPassword ? 'text' : 'password'}
+//                       name='password'
+//                       placeholder="Enter your password"
+//                       onChange={handleChange}
+//                     />
+//                     <div className='wid invalid-feedback'>{errors.passwordError}</div>
+//                   </div>
+
+//                   <div>
+//                     <input
+//                       className={`form-control ${(errors.confirmPasswordError) ? 'is-invalid' : 'text-dark'}`}
+//                       type="password"
+//                       placeholder="Re-enter your password"
+//                       name='confirmPassword'
+//                       value={user.confirmPassword}
+//                       onChange={handleChange}
+//                     />
+//                     <div className='invalid-feedback'>{errors.confirmPasswordError}</div>
+//                   </div>
+
+//                   <div>
+//                     <input
+//                       type="text"
+//                       className={` form-control ${(errors.usernameError) ? 'is-invalid' : 'text-dark'}`}
+//                       name='username'
+//                       placeholder="Enter your username"
+//                       value={user.username}
+//                       onChange={handleChange}
+//                     />
+//                     <div className="invalid-feedback">{errors.usernameError}</div>
+//                   </div>
+
+//                   <button
+//                     type="submit"
+//                     className="btn border rounded-pill btn-light fw-bold"
+//                   >
+//                     Sign Up
+//                   </button>
+//                   <h5><NavLink to='/join' className='text-danger'>Back</NavLink> </h5>
+//                 </div>
+//               </div>
+//             </div>
+//             <br />
+//           </div>
+//         </div>
+//       </form>
+//     </>
+//   );
+// }
+
+// export default SignUp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-// import Swal from 'sweetalert2';
-// import withReactContent from 'sweetalert2-react-content';
 import { register } from '../services/auth';
-// const MySwal = withReactContent(Swal);
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -224,7 +422,8 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    username: '', // Add this line
+    username: '',
+    gender: '',
   });
 
   const [errors, setErrors] = useState({
@@ -232,7 +431,8 @@ const SignUp = () => {
     emailError: '',
     passwordError: '',
     confirmPasswordError: '',
-    usernameError: '', // Add this line
+    usernameError: '',
+    genderError: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -253,16 +453,16 @@ const SignUp = () => {
         });
         break;
       case 'email':
-        const emailRegix = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         setErrors({
           ...errors,
-          emailError: value.length === 0 ? 'Email is required' : emailRegix.test(value) ? '' : 'Invalid Email',
+          emailError: value.length === 0 ? 'Email is required' : emailRegex.test(value) ? '' : 'Invalid Email',
         });
         break;
       case 'password':
         const passwordRegex = /^.{8,}$/;
         setErrors({
-          ...user,
+          ...errors,
           passwordError: value.length === 0 ? 'Password is required' : passwordRegex.test(value) ? '' : 'More than 8 characters',
         });
         break;
@@ -272,10 +472,16 @@ const SignUp = () => {
           confirmPasswordError: value.length === 0 ? '' : value !== user.password ? 'Passwords do not match' : '',
         });
         break;
-      case 'username': // Add this case
+      case 'username':
         setErrors({
           ...errors,
           usernameError: value.length === 0 ? 'Username is required' : value.length < 3 ? 'Username must be at least 3 characters' : '',
+        });
+        break;
+      case 'gender':
+        setErrors({
+          ...errors,
+          genderError: value.length === 0 ? 'Gender is required' : '',
         });
         break;
       default:
@@ -285,23 +491,18 @@ const SignUp = () => {
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-    if (errors.nameError || errors.emailError || errors.passwordError || errors.usernameError) {
-      // MySwal.fire({
-      //   icon: 'error',
-      //   title: 'Validation Error',
-      //   text: 'Please correct the form errors.',
-      // });
+
+    if (errors.nameError || errors.emailError || errors.passwordError || errors.usernameError || errors.genderError) {
+      // Handle errors (e.g., display an alert)
+      alert('Please correct the form errors.');
     } else {
       try {
         const res = await register(user);
         console.log(res);
         navigate('/signIn');
       } catch (err) {
-        // MySwal.fire({
-        //   icon: 'error',
-        //   title: 'Something went wrong',
-        //   text: 'Please correct the form errors.',
-        // });
+        // Handle registration failure (e.g., display an alert)
+        alert('Something went wrong. Please try again.');
       }
     }
   };
@@ -315,7 +516,7 @@ const SignUp = () => {
               <div className="col d-flex align-items-center justify-content-center">
                 <div className="d-grid gap-4 text-white">
                   <br />
-                  <h2 className=''>Create your account</h2>
+                  <h2>Create your account</h2>
 
                   <div>
                     <input
@@ -374,6 +575,23 @@ const SignUp = () => {
                       onChange={handleChange}
                     />
                     <div className="invalid-feedback">{errors.usernameError}</div>
+                  </div>
+
+                  <div>
+                    {/* <label htmlFor="gender">Gender:</label> */}
+                    <select
+                      id="gender"
+                      name="gender"
+                      value={user.gender}
+                      onChange={handleChange}
+                      className={`form-control ${(errors.genderError) ? 'is-invalid' : 'text-dark'}`}
+                      // placeholder='Gender'
+                    >
+                      <option value="">Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                    <div className='invalid-feedback'>{errors.genderError}</div>
                   </div>
 
                   <button

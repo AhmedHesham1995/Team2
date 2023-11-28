@@ -5351,6 +5351,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';  // Import SweetAlert
 
 const Home = () => {
   const [newPost, setNewPost] = useState('');
@@ -5364,7 +5365,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const allPosts = useSelector((state) => state.posts.posts);
-
+  
   const [randomOrder, setRandomOrder] = useState(null);
 
   useEffect(() => {
@@ -5412,6 +5413,7 @@ const Home = () => {
     try {
       const response = await axios.get(`http://localhost:4005/posts`);
       dispatch(setPostsAction(response.data.reverse()));
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
@@ -5465,6 +5467,25 @@ const Home = () => {
     fetchReplies(postId);
   };
 
+  // const handleReply = async () => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.put(
+  //       `http://localhost:4005/posts/`,
+  //       { text: replyText, postId: selectedPost, userId: localStorage.getItem("ID") },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     setReplyText('');
+  //     fetchReplies(selectedPost);
+  //   } catch (error) {
+  //     console.error('Error replying to post:', error.message);
+  //   }
+  // };
+
   const handleReply = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -5479,10 +5500,16 @@ const Home = () => {
       );
       setReplyText('');
       fetchReplies(selectedPost);
+  
+      // Show a success toast
+      toast.success('Reply added successfully!');
     } catch (error) {
       console.error('Error replying to post:', error.message);
+      // Show an error toast
+      toast.error('Error adding reply. Please try again.');
     }
   };
+  
 
   const handleLike = async (postId) => {
     try {
@@ -5568,12 +5595,35 @@ const Home = () => {
 
   
   
-  
+  const handleDeleteSpecificPost = async (postId) => {
+    // Show SweetAlert confirmation
+    const isConfirmed = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this post!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it',
+      reverseButtons: true,
+    });
+
+    if (isConfirmed.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:4005/posts/${postId}`);
+        fetchAndSetPosts();
+        Swal.fire('Deleted!', 'Your post has been deleted.', 'success');
+      } catch (error) {
+        console.error('Error', error.message);
+      }
+    }
+  };
 
   
   
 
 
+  
+  
 
  
 
@@ -5634,7 +5684,7 @@ const Home = () => {
         <div className="center__post" key={post._id}>
           <div className="center__post__header">
             <div className="center__post__header-left">
-              <img src={post.userProfilePicture} alt="" />
+              <img src={post.userId.profilePicture} alt="" />
               <span className="center__post__header-left__name">
                 {post.userId && post.userId.name}
               </span>
@@ -5644,7 +5694,11 @@ const Home = () => {
             </div>
             <div className="center__post__header-right">
               <span>
-                <i className="fas fa-ellipsis svg"></i>
+                {post.userId && post.userId._id === localStorage.getItem('ID') && (
+                  <span className="center__post__bottom-span">
+                    <i onClick={() => handleDeleteSpecificPost(post._id)} className="fas fa-ellipsis svg" ></i>
+                  </span>
+                )}
               </span>
             </div>
           </div>
@@ -5711,6 +5765,13 @@ const Home = () => {
                     <span className="center__post__header-left__user">
                       @{reply.postedBy.username} . {formatDistanceToNow(new Date(reply.created), { addSuffix: true })}
                     </span>
+                    
+                    {/* <span className="center__post__bottom-span-reply">
+                      <span>
+                      <i onClick={() => handleDeleteSpecificReply(post._id)} className="fas fa-ellipsis svg" ></i>
+
+                      </span>
+                    </span> */}
                   </div>
                   <span className='reply-text'>{reply.text}</span>
                 </div>

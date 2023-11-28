@@ -97,10 +97,6 @@ const postsSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    userProfilePicture: {
-        type: String,
-        default: 'https://i.pinimg.com/564x/ed/1f/41/ed1f41959e7e9aa7fb0a18b76c6c2755.jpg' 
-    },
     updated: Date,
     replies: [
         {
