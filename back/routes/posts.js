@@ -29,7 +29,7 @@ router.delete('/:id',deletePost)
 
 
 //replies (essam)
-router.put('/',auth, addReply)
+router.put('/replies',auth, addReply)
 
 router.patch('/', editReply)
 

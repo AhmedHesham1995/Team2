@@ -5352,6 +5352,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';  // Import SweetAlert
+import Spinner from 'react-bootstrap/Spinner';
 
 const Home = () => {
   const [newPost, setNewPost] = useState('');
@@ -5361,12 +5362,15 @@ const Home = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const [userData, setUserData] = useState(null);
+
+  
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const allPosts = useSelector((state) => state.posts.posts);
   
   const [randomOrder, setRandomOrder] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const order = [...allPosts].sort(() => Math.random() - 0.5);
@@ -5416,6 +5420,9 @@ const Home = () => {
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching posts:', error);
+    }finally {
+      // Set loading to false regardless of success or failure
+      setIsLoading(false);
     }
   };
 
@@ -5490,7 +5497,7 @@ const Home = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.put(
-        `http://localhost:4005/posts/`,
+        `http://localhost:4005/posts/replies`,
         { text: replyText, postId: selectedPost, userId: localStorage.getItem("ID") },
         {
           headers: {
@@ -5628,7 +5635,17 @@ const Home = () => {
  
 
   return (
-    <section>
+    <>
+    {isLoading ? (
+        // Show spinner while data is being loaded
+        <div className="loader-container" >
+          <Spinner animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        </div>
+        
+      ) : (
+        <section>
       <ToastContainer />
       <div className="center__happen">
         <div className="center__happen__top">
@@ -5781,6 +5798,9 @@ const Home = () => {
         </div>
       ))}
     </section>
+      )}
+    
+    </>
   );
 };
 
