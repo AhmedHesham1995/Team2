@@ -1687,3 +1687,52 @@ hr {
   color: gray;
   cursor: pointer;
 }
+
+
+
+/*loader*/
+.loader-container {
+  position: fixed;
+  top: 50%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Adjust the z-index as needed */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Add these styles to your CSS file */
+.loader-container-1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  /* opacity: 0.7; */
+  z-index: 9998;
+}
+
+.loader-spinner {
+  z-index: 9999;
+}

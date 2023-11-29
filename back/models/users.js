@@ -78,6 +78,10 @@ const usersSchema = mongoose.Schema({
     name: {
         type: String,
     },
+    isActive: {
+        type: String,
+        default: true
+    },
     email: {
         type: String,
         required: true,

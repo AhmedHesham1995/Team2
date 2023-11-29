@@ -37,68 +37,76 @@ import EditProfile from "./pages/Profile/EditProfile/EditProfile";
 import ProfileSaved from "./pages/Profile/profileSaved";
 
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppLayout />,
-    children: [
-      { index: true, element: <Join /> },
 
-      {
-        path: "/home",
-        element: <Protected><HomeNav /></Protected>,
-        children: [
-          { index: true, element: <Home /> },
-          { path: "followings", element: <Followings /> },
-        ],
-      },
-
-
-      {
-        path: "/explore",
-        element: <Protected><ExploreNav /></Protected>,
-        children: [
-          { index: true, element: <Explore /> },
-          { path: "entertainment", element: <Entertainment /> },
-          { path: "trend", element: <Trending /> },
-          { path: "news", element: <News /> },
-          { path: "sports", element: <Sports /> },
-        ],
-      },
-
-      { path: "lists", element: <Protected><Lists /></Protected> },
-      {
-        path: "/notifications",
-        element: <Protected><Notification /></Protected>,
-        children: [
-          { index: true, element: <All /> },
-          { path: "mentions", element: <Mentions /> },
-          { path: "verified", element: <Verified /> },
-        ],
-      },
-      { path: "join", element: <Join /> },
-      { path: "signUp", element: <SignUp /> },
-      { path: "signIn", element: <SignIn /> },
-      { path: "editProfile", element: <EditProfile /> },
-      {
-        path: "/profile",
-        element: <Protected><Profile /></Protected>,
-        children: [
-          { index: true, element: <ProfilePosts /> },
-          { path: "replies", element: <ProfileReplies /> },
-          { path: "highlights", element: <ProfileHighlights /> },
-          { path: "media", element: <ProfileMedia /> },
-          { path: "likes", element: <ProfileLikes /> },
-          { path: "saves", element: <ProfileSaved /> },
-        ],
-      },
-      { path: "communities", element: <Protected><Communities /></Protected> },
-      { path: "*", element: <NotFound /> }, //wildCard
-    ],
-  },
-]);
 
 function App() {
+
+
+
+
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <AppLayout />,
+      children: [
+        { index: true, element: <Join /> },
+  
+        {
+          path: "/home",
+          element: <Protected><HomeNav /></Protected>,
+          children: [
+            { index: true, element: <Home /> },
+            { path: "followings", element: <Followings /> },
+          ],
+        },
+  
+  
+        {
+          path: "/explore",
+          element: <Protected><ExploreNav /></Protected>,
+          children: [
+            { index: true, element: <Explore /> },
+            { path: "entertainment", element: <Entertainment /> },
+            { path: "trend", element: <Trending /> },
+            { path: "news", element: <News /> },
+            { path: "sports", element: <Sports /> },
+          ],
+        },
+  
+        { path: "lists", element: <Protected><Lists /></Protected> },
+        {
+          path: "/notifications",
+          element: <Protected><Notification /></Protected>,
+          children: [
+            { index: true, element: <All /> },
+            { path: "mentions", element: <Mentions /> },
+            { path: "verified", element: <Verified /> },
+          ],
+        },
+        { path: "join", element: <Join /> },
+        { path: "signUp", element: <SignUp /> },
+        { path: "signIn", element: <SignIn /> },
+        { path: "editProfile", element: <EditProfile /> },
+        {
+          path: "/profile",
+          element: <Protected><Profile /></Protected>,
+          children: [
+            { index: true, element: <ProfilePosts /> },
+            { path: "replies", element: <ProfileReplies /> },
+            { path: "highlights", element: <ProfileHighlights /> },
+            { path: "media", element: <ProfileMedia /> },
+            { path: "likes", element: <ProfileLikes /> },
+            { path: "saves", element: <ProfileSaved /> },
+          ],
+        },
+        { path: "communities", element: <Protected><Communities /></Protected> },
+        { path: "*", element: <NotFound /> }, //wildCard
+      ],
+    },
+  ]);
+
+  
 
   const user = useSelector(data => data.user.userData)
   const [isLogin, setLogin] = useState((localStorage.getItem('token')) ? true : false)
