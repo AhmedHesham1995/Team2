@@ -2289,12 +2289,12 @@ const ProfilePosts = () => {
                 />
                 {post.likes.length > 0 && post.likes.length}
               </span>
-              <span className="center__post__bottom-span">
+              {/* <span className="center__post__bottom-span">
                 <FontAwesomeIcon icon={faChartBar} />
               </span>
               <span className="center__post__bottom-span">
                 <FontAwesomeIcon icon={faArrowUp} />
-              </span>
+              </span> */}
               <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
                 <FontAwesomeIcon
                   icon={faBookmark}

@@ -7,6 +7,8 @@ import FollowPages from "../../components/medium/followPages";
 import ExploreComp from "../../components/small/exploreComp";
 import { Outlet, Link, NavLink } from "react-router-dom";
 import axios from "axios";
+import Premium from "../../components/small/premium";
+import FollowParent from "../../components/medium/followParent";
 // import { useSelector } from "react-redux";
 import './profile.css'
 
@@ -86,11 +88,11 @@ const Profile = () => {
                 to = "/profile/replies"><span>Replies</span> </NavLink>
             </div>
 
-            <div>
+            {/* <div>
                 <NavLink className = {({isActive}) =>{return (isActive) ? "left" : "" }} 
                 style = {({isActive}) =>{ return (isActive) ? {color: "white" , textDecoration:"none"} : {color : "gray" , textDecoration:"none"}}}
                 to = "/profile/highlights"><span>Hightlights</span> </NavLink>
-            </div>
+            </div> */}
 
             <div>
                 <NavLink className = {({isActive}) =>{return (isActive) ? "left" : "" }} 
@@ -116,53 +118,14 @@ const Profile = () => {
             <Outlet />
           </Col>
 
-          <Col md={4}
-            className="right"
-            style={{ backgroundColor: "black" }}
-          >
-            <nav className="nav-bar">
-              <div className="search-bar-container">
-                <input
-                  type="text"
-                  className="search-bar"
-                  placeholder="Search..."
-                />
+          <Col md={4}>
+            <section className="right">
+              <Premium />
+
+              <div className="right__container">
+                <FollowParent />
               </div>
-            </nav>
-            <div className="right__container">
-              <FollowPages />
-            </div>
-            <div className="youmay" style={{ backgroundColor: "#2c2c2c" }}>
-              <p
-                style={{
-                  fontSize: "xx-large",
-                  color: "white",
-                  marginLeft: "20px",
-                }}
-              >
-                <b>What’s happening</b>
-              </p>
-              <ExploreComp
-                trend="#اعصار__دانيال"
-                country="Trending in Egypt"
-                posts="58.4K Posts"
-              />
-              <ExploreComp
-                trend="#اعصار__دانيال"
-                country="Trending in Egypt"
-                posts="58.4K Posts"
-              />
-              <ExploreComp
-                trend="#اعصار__دانيال"
-                country="Trending in Egypt"
-                posts="58.4K Posts"
-              />
-              <ExploreComp
-                trend="#اعصار__دانيال"
-                country="Trending in Egypt"
-                posts="58.4K Posts"
-              />
-            </div>
+            </section>
           </Col>
         </Row>
       </div>
