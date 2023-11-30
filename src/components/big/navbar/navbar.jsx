@@ -569,7 +569,7 @@ const Navbar = () => {
               <FontAwesomeIcon className="svg" icon={faHouse} />
             </NavLink>
           </li>
-          <li className="home__nav__li">
+          {/* <li className="home__nav__li">
             <NavLink to="/explore" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
               Explore
@@ -577,7 +577,7 @@ const Navbar = () => {
             <NavLink to="/explore" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
             </NavLink>
-          </li>
+          </li> */}
           <li className="home__nav__li">
             <NavLink to="/notifications" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faBell} />
@@ -596,7 +596,7 @@ const Navbar = () => {
               <FontAwesomeIcon className="svg" icon={faEnvelope} />
             </NavLink>
           </li>
-          <li className="home__nav__li">
+          {/* <li className="home__nav__li">
             <NavLink to="/lists" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faListUl} />
               Lists
@@ -604,8 +604,8 @@ const Navbar = () => {
             <NavLink to="/lists" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faListUl} />
             </NavLink>
-          </li>
-          <li className="home__nav__li">
+          </li> */}
+          {/* <li className="home__nav__li">
             <NavLink to="/communities" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faUserGroup} />
               Communities
@@ -613,8 +613,8 @@ const Navbar = () => {
             <NavLink to="/communities" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faUserGroup} />
             </NavLink>
-          </li>
-          <li className="home__nav__li">
+          </li> */}
+          {/* <li className="home__nav__li">
             <NavLink to="/verified" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faXTwitter} />
               Verified
@@ -622,7 +622,7 @@ const Navbar = () => {
             <NavLink to="/verified" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faXTwitter} />
             </NavLink>
-          </li>
+          </li> */}
           <li className="home__nav__li">
             <NavLink to="/profile" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faUser} />
@@ -632,7 +632,7 @@ const Navbar = () => {
               <FontAwesomeIcon className="svg" icon={faUser} />
             </NavLink>
           </li>
-          <li className="home__nav__li">
+          {/* <li className="home__nav__li">
             <NavLink to="/more" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faEllipsis} />
               More
@@ -640,7 +640,7 @@ const Navbar = () => {
             <NavLink to="/more" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faEllipsis} />
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <button className="home__nav__btn">Post</button>
         <button className="home__nav__btn-hidden">

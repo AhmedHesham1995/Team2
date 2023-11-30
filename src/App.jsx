@@ -94,7 +94,7 @@ function App() {
           children: [
             { index: true, element: <ProfilePosts /> },
             { path: "replies", element: <ProfileReplies /> },
-            { path: "highlights", element: <ProfileHighlights /> },
+            // { path: "highlights", element: <ProfileHighlights /> },
             { path: "media", element: <ProfileMedia /> },
             { path: "likes", element: <ProfileLikes /> },
             { path: "saves", element: <ProfileSaved /> },

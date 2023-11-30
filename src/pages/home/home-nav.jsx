@@ -19,9 +19,9 @@ const HomeNav = () => {
               <div className="center__header">
                 <div className="row mt-2 ms-2 ">
                   <div className="col text-start h4">Home</div>
-                  <div className="col text-end">
+                  {/* <div className="col text-end">
                   <FontAwesomeIcon icon={faGear} className="right-search-icon me-5" />
-                  </div> 
+                  </div>  */}
                 </div>
                 
                 <div className="center__header__divs text-light ">
