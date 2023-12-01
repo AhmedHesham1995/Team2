@@ -125,7 +125,14 @@ const usersSchema = mongoose.Schema({
     },
     followers:[{type:ObjectId,ref:"User"}],
     followings:[{type:ObjectId,ref:"User"}],
-    dob: Date
+    dob: Date,
+    verified : {
+        type:Boolean ,
+        default:false 
+    },status: {
+        type: String,
+        default: "Active" 
+    },role : String ,
 }, { timestamps: true });
 
 usersSchema.pre("save", async function (next) {

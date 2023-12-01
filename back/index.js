@@ -46,6 +46,6 @@ mongoose
     console.log(err);
   });
 
-app.listen(4005, () => {
-  console.log("listening at 4005");
-});
+  const port =  4005;
+  app.listen(port, () => console.log(`Listening on port ${port}...`));
+  

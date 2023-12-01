@@ -36,6 +36,7 @@ import store from './redux/store'
 import EditProfile from "./pages/Profile/EditProfile/EditProfile";
 import ProfileSaved from "./pages/Profile/profileSaved";
 
+import EmailVerify from "./pages/emailVerify";
 
 
 
@@ -101,6 +102,7 @@ function App() {
           ],
         },
         { path: "communities", element: <Protected><Communities /></Protected> },
+        {path : "users/:id/verify/:token" , element :<EmailVerify/>},
         { path: "*", element: <NotFound /> }, //wildCard
       ],
     },

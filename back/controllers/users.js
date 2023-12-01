@@ -2,10 +2,14 @@ const usersModel=require('../models/users')
 const postsModel=require('../models/posts')
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
-
+const Token = require ('../models/token')
+const sendMail = require ('../utils/sendEmail')
+const crypto = require ('crypto')
+const express=require('express')
+var router=express.Router()
 const getAllUsers=async(req,res)=>{
     try{
-        let users=await usersModel.find()
+        let users=await usersModel.find({})
         res.status(200).json(users)
     }
     catch(err){
@@ -13,12 +17,55 @@ const getAllUsers=async(req,res)=>{
 
     }
 }
-    
+ 
+
+const verifyEmail =async (req,res) =>{
+    try{
+        const user=await usersModel.findOne({_id:req.params.id}) ;
+        console.log(user) ;
+        if (!user){
+            return res.status(400).send({message :"Invalid link"})
+        }
+        const token = await Token.findOne({
+            userId : user._id,
+            token:req.params.token 
+        })
+        if (!token){
+            return res.status(400).send({message :"Invalid link"})
+        }
+        await usersModel.updateOne({ _id: user._id }, { $set: { verified: true } });
+
+        // await Token.deleteOne({ _id: token._id });
+        res.status(200).json({message:"Email verified successfully"})
+    }catch(error){
+        res.status(400).json({message:error.message})
+    }
+}
+const toggleUserStatus = async (req, res) => {
+    const userId = req.params.id;
+    try {
+      const user = await usersModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      user.status = user.status === "Active" ? "Inactive" : "Active";
+      const updatedUser = await user.save();
+      res.status(200).json({ message: "User status toggled", data: updatedUser });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  };
 const addUser=async(req,res)=>{
     var user=req.body
     try{
         const newuser=await usersModel.create(user)
-        res.json({message:"added successfully",data:newuser})
+        const token = await new Token ({
+            userId : newuser._id,
+            token : crypto.randomBytes(32).toString('hex')
+        }).save()
+        const url =`http://localhost:5173/users/${newuser._id}/verify/${token.token}`
+        await sendMail(newuser.email , "Verify Email" , url)
+        res.json({message:"An Email Sent to your Account please verify it"})
     }
     catch(err){
         res.status(400).json({message:err.message})
@@ -241,7 +288,43 @@ const getFollowState = async (req, res) => {
 
 //authentication
 async function login(req,res){
-    const {email,password,role}=req.body
+    const {email,password}=req.body
+    if(!email || !password){
+        return res.status(400).json({message:"you must provide email and password"})
+    }
+
+    const user=await usersModel.findOne({email:email})
+    if(!user){
+        return res.status(404).json({message:"invalid email or password"})
+    }
+
+    const isValid=await bcrypt.compare(password,user.password)
+    if(!isValid){
+        return res.status(401).json({message:"invalid password"})
+    }
+    if (!user.verified) {
+        let token = await Token.findOne({ userId: user._id });
+        if (!token) {
+            token = await new Token({
+                userId: user._id,
+                token: crypto.randomBytes(32).toString("hex"),
+            }).save();
+            const url = `http://localhost:5173/users/${user.id}/verify/${token.token}`;
+            await sendMail(user.email, "Verify Email", url);
+        }
+
+        return res
+            .status(400)
+            .send({ message: "An Email sent to your account please verify" });
+    }
+
+    //generate token
+    const token=jwt.sign({id:user._id,name:user.username},process.env.SECRET)
+    res.status(200).json({token:token, id:user._id})
+}
+
+async function loginDashboard(req,res){
+    const {email,password}=req.body
     if(!email || !password){
         return res.status(400).json({message:"you must provide email and password"})
     }
@@ -256,10 +339,12 @@ async function login(req,res){
         return res.status(401).json({message:"invalid password"})
     }
 
-
+    if (user.role!="ADMIN") {
+        return res.status(401).json({message:"You are donot admin"})
+    }
     //generate token
     const token=jwt.sign({id:user._id,name:user.username},process.env.SECRET)
     res.status(200).json({token:token, id:user._id})
 }
 
-module.exports={getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser,unfollow,getFollowers,getFollowing,getFollowState,follow}
+module.exports={loginDashboard ,toggleUserStatus,verifyEmail,getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser,unfollow,getFollowers,getFollowing,getFollowState,follow}

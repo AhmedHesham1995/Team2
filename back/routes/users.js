@@ -55,9 +55,8 @@ const{authAdmin}=require('../middlewares/authAdmin')
 const {auth}=require('../middlewares/auth')
 
 const {getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser, 
-    follow, unfollow, getFollowers, getFollowing, getFollowState}=require('../controllers/users')
-
-
+    follow, unfollow, getFollowers, getFollowing, getFollowState ,verifyEmail,loginDashboard,toggleUserStatus}=require('../controllers/users')
+    
 
 
 router.get('/',getAllUsers)
@@ -69,10 +68,14 @@ router.post('/signup',addUser)
 router.get('/:id',getOneUser)
 
 
+
+
+router.put('/:id/toggle-status' ,toggleUserStatus)
+
+router.post ('/logindashboard',loginDashboard )
 router.patch('/editprofile/:id',updateUser)
-
-
-router.delete('/:id',auth,authAdmin,deleteUser)
+router.get('/:id/verify/:token' ,verifyEmail)
+router.delete('/:id',deleteUser)
 
 
 router.get('/:id/posts',posts4specificUser)

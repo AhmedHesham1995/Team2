@@ -434,7 +434,7 @@ const SignUp = () => {
     usernameError: '',
     genderError: '',
   });
-
+  const [msg,setMsg] =useState("") ;
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -499,7 +499,7 @@ const SignUp = () => {
       try {
         const res = await register(user);
         console.log(res);
-        navigate('/signIn');
+        setMsg (res.data.message);
       } catch (err) {
         // Handle registration failure (e.g., display an alert)
         alert('Something went wrong. Please try again.');
@@ -593,6 +593,7 @@ const SignUp = () => {
                     </select>
                     <div className='invalid-feedback'>{errors.genderError}</div>
                   </div>
+                  {msg &&<div className= 'success-msg'>{msg}</div>}
 
                   <button
                     type="submit"
