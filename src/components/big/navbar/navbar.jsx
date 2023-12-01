@@ -596,16 +596,16 @@ const Navbar = () => {
               <FontAwesomeIcon className="svg" icon={faEnvelope} />
             </NavLink>
           </li>
-          {/* <li className="home__nav__li">
+          <li className="home__nav__li">
             <NavLink to="/lists" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faListUl} />
-              Lists
+              Find friends
             </NavLink>
             <NavLink to="/lists" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faListUl} />
             </NavLink>
-          </li> */}
-          {/* <li className="home__nav__li">
+          </li>
+          <li className="home__nav__li">
             <NavLink to="/communities" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faUserGroup} />
               Communities
@@ -613,7 +613,7 @@ const Navbar = () => {
             <NavLink to="/communities" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faUserGroup} />
             </NavLink>
-          </li> */}
+          </li>
           {/* <li className="home__nav__li">
             <NavLink to="/verified" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faXTwitter} />
