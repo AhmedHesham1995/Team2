@@ -73,6 +73,8 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
+const {ObjectId} = mongoose.Schema.Types
+
 
 const usersSchema = mongoose.Schema({
     name: {
@@ -121,6 +123,8 @@ const usersSchema = mongoose.Schema({
     birthDate: {
         type: String,
     },
+    followers:[{type:ObjectId,ref:"User"}],
+    followings:[{type:ObjectId,ref:"User"}],
     dob: Date
 }, { timestamps: true });
 

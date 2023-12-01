@@ -5,8 +5,112 @@ import Navbar from "../../components/big/navbar/navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear} from "@fortawesome/free-solid-svg-icons";
 import { Outlet , NavLink } from "react-router-dom";
-
+import { useState,useEffect } from "react";
+import axios from "axios";
 const HomeNav = () => {
+
+  const [user, setUser] = useState({});
+  const [followings, setNonFollowings] = useState([]);
+  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/followings`;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem('ID')}`);
+        const data = response.data.data;
+        setUser(data);
+      } catch (error) {
+        console.error('Error fetching user:', error.message);
+      }
+    };
+  
+    const fetchNonFollowings = async () => {
+      try {
+        const authToken = localStorage.getItem('token');
+  
+        // Fetch all users
+        const usersResponse = await axios.get("http://localhost:4005/users", {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        });
+  
+        const allUsers = usersResponse.data;
+  
+        // Fetch followings
+        const followingsResponse = await axios.get(apiUrlFollowings, {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        });
+  
+        const followingsData = followingsResponse.data.followings;
+  
+        // Filter out users who are already followed
+        const nonFollowings = allUsers.filter(user =>
+          !followingsData.some(following => following._id === user._id)
+        );
+  
+        setNonFollowings(nonFollowings);
+      } catch (error) {
+        console.error("Error fetching non-followings:", error);
+      }
+    };
+  
+    fetchUser();
+    fetchNonFollowings();
+  }, [apiUrlFollowings]);
+  
+
+  const handleFollowToggle = async (followingId) => {
+    try {
+      const authToken = localStorage.getItem('token');
+      const response = await axios.put(
+        `http://localhost:4005/users/follow/${followingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+
+      const updatedFollowings = followings.map((following) =>
+        following._id === followingId
+          ? { ...following, followStatus: !following.followStatus }
+          : following
+      );
+
+      setNonFollowings(updatedFollowings);
+    } catch (error) {
+      console.error("Error toggling follow:", error);
+    }
+  };
+
+  const handleUnfollowToggle = async (followingId) => {
+    try {
+      const authToken = localStorage.getItem('token');
+      const response = await axios.put(
+        `http://localhost:4005/users/unfollow/${followingId}`,
+        {},
+        {
+          headers: {
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+
+      const updatedFollowings = followings.map((following) =>
+        following._id === followingId
+          ? { ...following, followStatus: !following.followStatus }
+          : following
+      );
+
+      setNonFollowings(updatedFollowings);
+    } catch (error) {
+      console.error("Error toggling unfollow:", error);
+    }
+  };
     return (
         <section className="home">
         <Row>
@@ -39,11 +143,41 @@ const HomeNav = () => {
           </Col>
           
           <Col md={4}>
-            <section className="right">
+          <section className="right">
               <Premium />
 
               <div className="right__container">
-                <FollowParent />
+                <h4 className="right__container__h4">Who to follow</h4>
+
+                {Array.isArray(followings) ? (
+                  followings.slice(0, 4).map((following) => (
+                    <div key={following._id} className="right__container__who">
+                      <div className="right__container__who__left">
+                        <div className="right__container__who__left-img">
+                          <img src={following.profilePicture} alt="" />
+                        </div>
+                        <div className="right__container__who__left-name">
+                          <div>{following.name}</div>
+                          <span>@{following.username}</span>
+                        </div>
+                      </div>
+                      <div className="right__container__who__right">
+                        <button
+                          className="right__container__who__right-btn"
+                          onClick={() =>
+                            following.followStatus
+                              ? handleUnfollowToggle(following._id)
+                              : handleFollowToggle(following._id)
+                          }
+                        >
+                          {following.followStatus ? "Unfollow" : "Follow"}
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No followings available</p>
+                )}
               </div>
             </section>
           </Col>

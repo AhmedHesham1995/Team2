@@ -5,7 +5,7 @@ const jwt=require('jsonwebtoken')
 
 const getAllUsers=async(req,res)=>{
     try{
-        let users=await usersModel.find({},'name -_id')
+        let users=await usersModel.find()
         res.status(200).json(users)
     }
     catch(err){
@@ -91,6 +91,148 @@ const posts4specificUser=async(req,res)=>{
         res.status(500).json({message: message.err})
     }
 }
+
+
+
+
+// const follow = async (req, res) => {
+//     try {
+//         const { userId } = req.params;
+
+//         const user = await usersModel.findById(userId);
+//         if (user.followers.includes(req.id)) {
+//             return res.status(400).json({ message: 'You are already following this user' });
+//         }
+
+//         await usersModel.findByIdAndUpdate(
+//             userId,
+//             { $push: { followers: req.id } },
+//             { new: true }
+//         );
+
+//         const result = await usersModel.findByIdAndUpdate(
+//             req.id,
+//             { $push: { following: userId } },
+//             { new: true }
+//         );
+
+//         res.json(result);
+//     } catch (error) {
+//         return res.status(422).json({ error: error.message });
+//     }
+// };
+
+
+// const unfollow = async (req, res) => {
+//     try {
+//         const { unfollowId } = req.params;
+
+//         await usersModel.findByIdAndUpdate(
+//             unfollowId,
+//             { $pull: { followers: req.id } },
+//             { new: true }
+//         );
+
+//         const result = await usersModel.findByIdAndUpdate(
+//             req.id,
+//             { $pull: { following: unfollowId } },
+//             { new: true }
+//         )
+
+//         res.json(result);
+//     } catch (error) {
+//         return res.status(422).json({ error: error.message });
+//     }
+// };
+
+
+const follow = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await usersModel.findById(userId);
+        if (user.followers.includes(req.id)) {
+            return res.status(400).json({ message: 'You are already following this user' });
+        }
+
+        await usersModel.findByIdAndUpdate(
+            userId,
+            { $push: { followers: req.id } },
+            { new: true }
+        );
+
+        const result = await usersModel.findByIdAndUpdate(
+            req.id,
+            { $push: { followings: userId } },
+            { new: true }
+        );
+
+        res.json(result);
+    } catch (error) {
+        return res.status(422).json({ error: error.message });
+    }
+};
+
+const unfollow = async (req, res) => {
+    try {
+        const { unfollowId } = req.params;
+
+        await usersModel.findByIdAndUpdate(
+            unfollowId,
+            { $pull: { followers: req.id } },
+            { new: true }
+        );
+
+        const result = await usersModel.findByIdAndUpdate(
+            req.id,
+            { $pull: { followings: unfollowId } },
+            { new: true }
+        );
+
+        res.json(result);
+    } catch (error) {
+        return res.status(422).json({ error: error.message });
+    }
+};
+
+
+
+const getFollowers = async (req, res) => {
+    try {
+        // const userId = req.params.id;
+        const userId = req.id;
+        const user = await usersModel.findById(userId).populate('followers', 'name  profilePicture username');
+        res.status(200).json({ followers: user.followers });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getFollowing = async (req, res) => {
+    try {
+        // const userId = req.params.id;
+        const userId = req.id;
+        const user = await usersModel.findById(userId).populate('followings', 'name profilePicture username');
+        res.status(200).json({ followings: user.followings });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+const getFollowState = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const loggedInUserId = req.id;
+
+        const isFollowing = await usersModel.findById(loggedInUserId)
+            .select('following')
+            .then(user => user.followings.includes(userId));
+
+        res.json({ followings: isFollowing });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
   
 
 
@@ -120,4 +262,4 @@ async function login(req,res){
     res.status(200).json({token:token, id:user._id})
 }
 
-module.exports={getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser}
+module.exports={getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser,unfollow,getFollowers,getFollowing,getFollowState,follow}

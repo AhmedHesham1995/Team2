@@ -5826,7 +5826,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Swal from 'sweetalert2';  // Import SweetAlert
+import Swal from 'sweetalert2';  
 import Spinner from 'react-bootstrap/Spinner';
 
 const Home = () => {
@@ -5838,6 +5838,12 @@ const Home = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingReplies, setIsLoadingReplies] = useState(false);
+
+  const [followings, setNonFollowings] = useState([]);
+  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/followings`;
+
+
+  
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
