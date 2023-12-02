@@ -370,7 +370,7 @@ const Lists = () => {
             People you may know
           </div>
 
-          {users.map((user) => (
+          {/* {users.map((user) => (
             <div key={user._id} className="right__container__who">
               <div className="right__container__who__left">
                 <div className="right__container__who__left-img">
@@ -390,11 +390,40 @@ const Lists = () => {
                       : handleFollowToggle(user._id)
                   }
                 >
-                  {user.followStatus ? "Unfollow" : "Follow"}
+                  {user.followStatus ? "Following" : "Follow"}
                 </button>
               </div>
             </div>
-          ))}
+          ))} */}
+
+            {users.map((user) => (
+            <div key={user._id} className="right__container__who">
+                <div className="right__container__who__left">
+                <div className="right__container__who__left-img">
+                    <img src={user.profilePicture} alt="" />
+                </div>
+                <div className="right__container__who__left-name">
+                    <div>{user.name}</div>
+                    <span>@{user.username}</span>
+                </div>
+                </div>
+                <div className="right__container__who__right">
+                <button
+                    className={`right__container__who__right-btn ${
+                    user.followStatus ? 'following' : 'not-following'
+                    }`}
+                    onClick={() =>
+                    user.followStatus
+                        ? handleUnfollowToggle(user._id)
+                        : handleFollowToggle(user._id)
+                    }
+                >
+                    {user.followStatus ? 'Following' : 'Follow'}
+                </button>
+                </div>
+            </div>
+            ))}
+
         </Col>
         <Col md={4}>
           <section className="right">

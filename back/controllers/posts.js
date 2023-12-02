@@ -1,6 +1,7 @@
 const postsModel = require('../models/posts');
 const multer = require('multer');
 const fs = require('fs');
+const usersModel= require('../models/users')
 
 // Define storage for uploaded images
 const storage = multer.memoryStorage();
@@ -338,6 +339,37 @@ const fetchLikedPosts = async (req, res) => {
 
   
   
+
+  // controllers/postsController.js
+
+const followingPosts = async (req, res) => {
+  try {
+    const loggedInUserId = req.id;
+
+    // Fetch the followings of the logged-in user
+    const user = await usersModel.findById(loggedInUserId).populate('followings');
+
+    // Extract the array of followings' user IDs
+    const followingsIds = user.followings.map(following => following._id);
+
+    // Fetch posts from followings
+    const posts = await postsModel.find({ userId: { $in: followingsIds } })
+      .sort({ createdAt: -1 })
+      .populate('userId', 'name username profilePicture');
+
+    res.json(posts);
+  } catch (error) {
+    console.error('Error fetching posts from followings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+
+
+
+
+  
   
   
   
@@ -346,7 +378,7 @@ const fetchLikedPosts = async (req, res) => {
 
 
   
-  module.exports = { getAllPosts, addPost, getOnePost, updatePost, deletePost, addReply, editReply, removeReply,toggleLike,toggleRepost,fetchLikedPosts,fetchRepostedPosts,fetchSavedPosts,toggleSaved};
+  module.exports = { getAllPosts, addPost, getOnePost, updatePost, deletePost, addReply, editReply, removeReply,toggleLike,toggleRepost,fetchLikedPosts,fetchRepostedPosts,fetchSavedPosts,toggleSaved,followingPosts};
   
 
 
