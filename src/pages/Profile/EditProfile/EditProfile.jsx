@@ -3,8 +3,80 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './EditProfile.css';
 import axios from 'axios';
+import CloudinaryUploadWidget from ".././CloudinaryUploadWidget";
+import CloudinaryUploadWidgetForCover from ".././CloudinaryUploadWidgetForCover";
+import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
+
 
 const EditProfile = () => {
+    const [publicId, setPublicId] = useState("");
+    const [coverPublicId, setCoverPublicId] = useState("");
+
+    const [user, setUser] = useState({});
+    const [cloudName] = useState("dvkh03fhr");
+    const [uploadPreset] = useState("ml_default");
+
+    const [uwConfig] = useState({
+        cloudName,
+        uploadPreset,
+        // cropping: true, //add a cropping step
+        // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+        // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+        // multiple: true,  //restrict upload to a single file
+        // folder: "user_images", //upload files to the specified folder
+        // tags: ["users", "profile"], //add the given tags to the uploaded files
+        // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+        // clientAllowedFormats: ["images"], //restrict uploading to image files only
+        // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+        // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+        // theme: "purple", //change to a purple theme
+    });
+    const [uwConfigCover] = useState({
+        cloudName,
+        uploadPreset,
+        // cropping: true, //add a cropping step
+        // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+        // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+        // multiple: true,  //restrict upload to a single file
+        // folder: "user_images", //upload files to the specified folder
+        // tags: ["users", "profile"], //add the given tags to the uploaded files
+        // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+        // clientAllowedFormats: ["images"], //restrict uploading to image files only
+        // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+        // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+        // theme: "purple", //change to a purple theme
+    });
+    const cld = new Cloudinary({
+        cloud: {
+            cloudName
+        }
+    });
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem('ID')}`);
+                const data = response.data.data;
+                setUser(data);
+                setUserData({
+                    name: data.name,
+                    profilePicture: data.profilePicture,
+                    profileCover: data.profileCover,
+                    location: data.location,
+                    bio: data.bio,
+                    birthDate: data.birthDate,
+                });
+                setPublicId(data.profilePicture.public_id);
+
+                console.log(response);
+            } catch (error) {
+                console.error('Error fetching user data:', error.message);
+            }
+        };
+        fetchUser();
+    }, []);
+
+
     const initState = {
         name: '',
         profileCover: '',
@@ -15,6 +87,8 @@ const EditProfile = () => {
     };
     const [userData, setUserData] = useState(initState);
     const { name, profileCover, profilePicture, location, bio, birthDate } = userData;
+
+
 
 
     const navigate = useNavigate()
@@ -31,11 +105,19 @@ const EditProfile = () => {
         navigate('/profile')
 
         try {
+            // const imagesArray = JSON.parse(localStorage.getItem('images'));
+            const latestProfilePicture = localStorage.getItem('images') || '';
+            const latestProfileCover = localStorage.getItem('imagesCover') || '';
+            localStorage.removeItem('images');
+            localStorage.removeItem('imagesCover');
 
             const updatedUserData = await axios.patch(`http://localhost:4005/users/editprofile/${userId}`, {
                 name,
-                profilePicture,
-                profileCover,
+                ...(latestProfilePicture && { profilePicture: latestProfilePicture }),
+                // profilePicture: latestProfilePicture,
+                // profileCover,
+                ...(latestProfileCover && { profileCover: latestProfileCover }),
+                // profileCover: latestProfileCover,
                 location,
                 bio,
                 birthDate,
@@ -49,31 +131,32 @@ const EditProfile = () => {
         }
     };
 
-    useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const user = await axios.get(`http://localhost:4005/users/${userId}`);
+    // useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const user = await axios.get(`http://localhost:4005/users/${userId}`);
 
-                setUserData({
-                    name: user.data.name,
-                    profilePicture: user.data.profilePicture,
-                    profileCover: user.data.profileCover,
-                    location: user.data.location,
-                    bio: user.data.bio,
-                    birthDate: user.data.birthDate,
-                });
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
+    //             setUserData({
+    //                 name: user.data.name,
+    //                 profilePicture: user.data.profilePicture,
+    //                 profileCover: user.data.profileCover,
+    //                 location: user.data.location,
+    //                 bio: user.data.bio,
+    //                 birthDate: user.data.birthDate,
+    //             });
+    //         } catch (error) {
+    //             console.error('Error fetching user data:', error);
+    //         }
+    //     };
 
-        fetchUserData();
-    }, [userId]);
+    //     fetchUserData();
+    // }, [userId]);
 
     return (
-        <div key={userData.userId} className='edit-prof bg-dark'>
+        <div key={userId} className='edit-prof bg-dark'>
             <br />
             <br />
+
             <div className='base-form container col-lg-5 col-md-8 col-sm-10 bg-black justify-content-center'>
                 <div className='headerOfEdit '>
                     <div className='left-side'>
@@ -83,42 +166,24 @@ const EditProfile = () => {
                         <h5 className='form-header'>Edit profile</h5>
                     </div>
                     <form className='' onSubmit={handleSubmit}>
-                        <button className='btn border rounded-pill btn-light fw-bold' type="submit"  >
-                            save
+                        <button className='btn border rounded-pill btn-light fw-bold' type="submit">
+                            Save
                         </button>
                     </form>
                 </div>
-
+<br/>
                 <form className='' onSubmit={handleSubmit}>
 
-                    <div className='text-center'>
-                        <label className='coverBtn' htmlFor='coverBtn'>
-                            <i className="btn btn-dark fas fa-camera"></i>
-                        </label>
-                        <input
-                            // onChange={handleProfileCoverChange}
-                            accept='image/*'
-                            type='file'
-                            style={{ display: 'none' }}
-                            id='coverBtn'
-                        />
-                    </div>
+                    <div className='handle-images'>
 
-                    <br />
+                        <div className='form-info '>
+                            <p>change cover</p>
+                            <CloudinaryUploadWidgetForCover uwConfigCover={uwConfigCover} setCoverPublicId={setCoverPublicId} />
+                        </div>
 
-                    <div className='d-flex'>
-                        <br />
-                        <div className='edit-profile-photo d-flex '>
-                            <label htmlFor='profilePhoto' className='change-photo btn btn-dark'>
-                                <i className="fas fa-camera"></i>
-                            </label>
-                            <input
-                                // onChange={handleProfilePhotoChange}
-                                id='profilePhoto'
-                                type='file'
-                                accept='image/*'
-                                style={{ display: 'none' }}
-                            />
+                        <div className='form-info '>
+                            <p>change picture</p>
+                            <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
                         </div>
                     </div>
 
@@ -138,7 +203,7 @@ const EditProfile = () => {
                                 style={{ border: '1px solid #555' }}
                             />
                             <small className="text-secondary position-absolute" style={{ top: '50%', right: '5px', transform: 'translateY(-50%)' }}>
-                                {/* {name.length}/50 */}
+                                {name?.length}/50
                             </small>
                         </div>
                         <br />
@@ -158,7 +223,7 @@ const EditProfile = () => {
                                 style={{ border: '1px solid #555' }}
                             />
                             <small className="text-secondary position-absolute" style={{ top: '50%', right: '5px', transform: 'translateY(-50%)' }}>
-                                {/* {userData.bio.length}/140 */}
+                                {userData.bio?.length}/140
                             </small>
                         </div>
                         <br />
@@ -178,7 +243,7 @@ const EditProfile = () => {
                                 style={{ border: '1px solid #555' }}
                             />
                             <small className="text-secondary position-absolute" style={{ top: '50%', right: '5px', transform: 'translateY(-50%)' }}>
-                                {/* {location.length}/20 */}
+                                {location?.length}/20
                             </small>
                         </div>
                         <br />

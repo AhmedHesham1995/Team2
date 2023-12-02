@@ -35,6 +35,8 @@ import { Provider, useSelector } from "react-redux";
 import store from './redux/store'
 import EditProfile from "./pages/Profile/EditProfile/EditProfile";
 import ProfileSaved from "./pages/Profile/profileSaved";
+import ProfileFollowers from "./pages/Profile/profileFollowers";
+import ProfileFollowing from "./pages/Profile/ProfileFollowing";
 
 import EmailVerify from "./pages/emailVerify";
 
@@ -52,7 +54,7 @@ function App() {
       element: <AppLayout />,
       children: [
         { index: true, element: <Join /> },
-  
+
         {
           path: "/home",
           element: <Protected><HomeNav /></Protected>,
@@ -61,8 +63,8 @@ function App() {
             { path: "followings", element: <Followings /> },
           ],
         },
-  
-  
+
+
         {
           path: "/explore",
           element: <Protected><ExploreNav /></Protected>,
@@ -74,7 +76,7 @@ function App() {
             { path: "sports", element: <Sports /> },
           ],
         },
-  
+
         { path: "lists", element: <Protected><Lists /></Protected> },
         {
           path: "/notifications",
@@ -89,6 +91,8 @@ function App() {
         { path: "signUp", element: <SignUp /> },
         { path: "signIn", element: <SignIn /> },
         { path: "editProfile", element: <EditProfile /> },
+        { path: "ProfileFollowers", element: <ProfileFollowers /> },
+        { path: "ProfileFollowing", element: <ProfileFollowing /> },
         {
           path: "/profile",
           element: <Protected><Profile /></Protected>,
@@ -102,13 +106,13 @@ function App() {
           ],
         },
         { path: "communities", element: <Protected><Communities /></Protected> },
-        {path : "users/:id/verify/:token" , element :<EmailVerify/>},
+        { path: "users/:id/verify/:token", element: <EmailVerify /> },
         { path: "*", element: <NotFound /> }, //wildCard
       ],
     },
   ]);
 
-  
+
 
   const user = useSelector(data => data.user.userData)
   const [isLogin, setLogin] = useState((localStorage.getItem('token')) ? true : false)

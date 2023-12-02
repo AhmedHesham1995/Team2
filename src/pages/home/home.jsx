@@ -16,7 +16,7 @@
 
 //     return (
 //         <section>
-            
+
 //             <div className="center__happen">
 //                 <div className="center__happen__top">
 //                     <img src={h} alt="" />
@@ -470,7 +470,7 @@
 
 //   const posts = Allposts.filter((p) => p.userId && p.userId._id !== localStorage.getItem("ID"));
 
-  
+
 
 //   const loved = useSelector((state) => state.homeLikes);
 
@@ -505,7 +505,7 @@
 //   }, []);
 
 
- 
+
 //   const fetchReplies = async (postId) => {
 //     try {
 //       const response = await axios.get(`http://localhost:4005/posts/${postId}`);
@@ -533,7 +533,7 @@
 //     try {
 //       // Get the JWT token from your authentication system (e.g., localStorage)
 //       const token = localStorage.getItem('token'); // Replace with your actual token retrieval method
-  
+
 //       // Make the POST request with the JWT token in the Authorization header
 //       await axios.post('http://localhost:4005/posts', {
 //         title: newPost,
@@ -542,7 +542,7 @@
 //           Authorization: token,
 //         },
 //       });
-  
+
 //       setNewPost('');
 //       fetchAndSetPosts();
 //     } catch (error) {
@@ -550,7 +550,7 @@
 //       // Handle the error, e.g., display an error message to the user
 //     }
 //   };
-  
+
 
 //   // const handleDeletePost = async (postId) => {
 //   //   try {
@@ -641,7 +641,7 @@
 //                   // onClick={() => handleDeletePost(post._id)}
 //                 />
 //               </span>
-              
+
 //             </div>
 //           </div>
 //           <div className="center__post__body">
@@ -812,7 +812,7 @@
 //       console.error('Error replying to post:', error.message);
 //     }
 //   };
-  
+
 
 //   return (
 //     <section>
@@ -1699,7 +1699,7 @@
 //                 />
 //                 {post.likes.length>0&&post.likes.length}
 //             </span>
-            
+
 //             <span className="center__post__bottom-span">
 //               <FontAwesomeIcon icon={faChartBar} />
 //             </span>
@@ -1978,7 +1978,7 @@
 //             value={newPost}
 //             onChange={(e) => setNewPost(e.target.value)}
 //           />
-          
+
 //         </div>
 //         {imageFile && (
 //           <img
@@ -2065,7 +2065,7 @@
 //                 />
 //                 {post.likes.length>0&&post.likes.length}
 //             </span>
-            
+
 //             <span className="center__post__bottom-span">
 //               <FontAwesomeIcon icon={faChartBar} />
 //             </span>
@@ -2251,18 +2251,18 @@
 //   // const handlePost = async () => {
 //   //   try {
 //   //     const token = localStorage.getItem('token');
-      
+
 //   //     const formData = new FormData();
 //   //     formData.append('title', newPost);
 //   //     formData.append('image', imageFile);
-  
+
 //   //     await axios.post('http://localhost:4005/posts', formData, {
 //   //       headers: {
 //   //         Authorization: token,
 //   //         'Content-Type': 'multipart/form-data',
 //   //       },
 //   //     });
-  
+
 //   //     setNewPost('');
 //   //     setImageFile(null);
 //   //     fetchAndSetPosts();
@@ -2270,7 +2270,7 @@
 //   //     console.error('Error', error.message);
 //   //   }
 //   // };
-  
+
 
 
 
@@ -2279,7 +2279,7 @@
 //         setSelectedPost(postId);
 //         fetchReplies(postId);
 //       };
-  
+
 
 //   const handleReply = async () => {
 //     try {
@@ -2684,16 +2684,16 @@
 
 
 
-  
-  
-  
-
-  
-  
 
 
 
- 
+
+
+
+
+
+
+
 
 //   return (
 //     <section>
@@ -2874,7 +2874,7 @@
 
 //     return (
 //         <section>
-            
+
 //             <div className="center__happen">
 //                 <div className="center__happen__top">
 //                     <img src={h} alt="" />
@@ -3328,7 +3328,7 @@
 
 //   const posts = Allposts.filter((p) => p.userId && p.userId._id !== localStorage.getItem("ID"));
 
-  
+
 
 //   const loved = useSelector((state) => state.homeLikes);
 
@@ -3363,7 +3363,7 @@
 //   }, []);
 
 
- 
+
 //   const fetchReplies = async (postId) => {
 //     try {
 //       const response = await axios.get(`http://localhost:4005/posts/${postId}`);
@@ -3391,7 +3391,7 @@
 //     try {
 //       // Get the JWT token from your authentication system (e.g., localStorage)
 //       const token = localStorage.getItem('token'); // Replace with your actual token retrieval method
-  
+
 //       // Make the POST request with the JWT token in the Authorization header
 //       await axios.post('http://localhost:4005/posts', {
 //         title: newPost,
@@ -3400,7 +3400,7 @@
 //           Authorization: token,
 //         },
 //       });
-  
+
 //       setNewPost('');
 //       fetchAndSetPosts();
 //     } catch (error) {
@@ -3408,7 +3408,7 @@
 //       // Handle the error, e.g., display an error message to the user
 //     }
 //   };
-  
+
 
 //   // const handleDeletePost = async (postId) => {
 //   //   try {
@@ -3499,7 +3499,7 @@
 //                   // onClick={() => handleDeletePost(post._id)}
 //                 />
 //               </span>
-              
+
 //             </div>
 //           </div>
 //           <div className="center__post__body">
@@ -3670,7 +3670,7 @@
 //       console.error('Error replying to post:', error.message);
 //     }
 //   };
-  
+
 
 //   return (
 //     <section>
@@ -4557,7 +4557,7 @@
 //                 />
 //                 {post.likes.length>0&&post.likes.length}
 //             </span>
-            
+
 //             <span className="center__post__bottom-span">
 //               <FontAwesomeIcon icon={faChartBar} />
 //             </span>
@@ -4836,7 +4836,7 @@
 //             value={newPost}
 //             onChange={(e) => setNewPost(e.target.value)}
 //           />
-          
+
 //         </div>
 //         {imageFile && (
 //           <img
@@ -4923,7 +4923,7 @@
 //                 />
 //                 {post.likes.length>0&&post.likes.length}
 //             </span>
-            
+
 //             <span className="center__post__bottom-span">
 //               <FontAwesomeIcon icon={faChartBar} />
 //             </span>
@@ -5109,18 +5109,18 @@
 //   // const handlePost = async () => {
 //   //   try {
 //   //     const token = localStorage.getItem('token');
-      
+
 //   //     const formData = new FormData();
 //   //     formData.append('title', newPost);
 //   //     formData.append('image', imageFile);
-  
+
 //   //     await axios.post('http://localhost:4005/posts', formData, {
 //   //       headers: {
 //   //         Authorization: token,
 //   //         'Content-Type': 'multipart/form-data',
 //   //       },
 //   //     });
-  
+
 //   //     setNewPost('');
 //   //     setImageFile(null);
 //   //     fetchAndSetPosts();
@@ -5128,7 +5128,7 @@
 //   //     console.error('Error', error.message);
 //   //   }
 //   // };
-  
+
 
 
 
@@ -5137,7 +5137,7 @@
 //         setSelectedPost(postId);
 //         fetchReplies(postId);
 //       };
-  
+
 
 //   const handleReply = async () => {
 //     try {
@@ -5363,15 +5363,15 @@
 
 //   const [userData, setUserData] = useState(null);
 
-  
+
 //   const navigate = useNavigate();
 
 //   const dispatch = useDispatch();
 //   const allPosts = useSelector((state) => state.posts.posts);
-  
+
 //   const [randomOrder, setRandomOrder] = useState(null);
 //   const [isLoading, setIsLoading] = useState(true);
-  
+
 
 //   useEffect(() => {
 //     const order = [...allPosts].sort(() => Math.random() - 0.5);
@@ -5508,7 +5508,7 @@
 //       );
 //       setReplyText('');
 //       fetchReplies(selectedPost);
-  
+
 //       // Show a success toast
 //       toast.success('Reply added successfully!');
 //     } catch (error) {
@@ -5517,7 +5517,7 @@
 //       toast.error('Error adding reply. Please try again.');
 //     }
 //   };
-  
+
 
 //   const handleLike = async (postId) => {
 //     try {
@@ -5601,8 +5601,8 @@
 //     }
 //   };
 
-  
-  
+
+
 //   const handleDeleteSpecificPost = async (postId) => {
 //     // Show SweetAlert confirmation
 //     const isConfirmed = await Swal.fire({
@@ -5626,14 +5626,14 @@
 //     }
 //   };
 
-  
-  
 
 
-  
-  
 
- 
+
+
+
+
+
 
 //   return (
 //     <>
@@ -5644,7 +5644,7 @@
 //           <span className="visually-hidden">Loading...</span>
 //         </Spinner>
 //         </div>
-        
+
 //       ) : (
 //         <section>
 //       <ToastContainer />
@@ -5783,7 +5783,7 @@
 //                     <span className="center__post__header-left__user">
 //                       @{reply.postedBy.username} . {formatDistanceToNow(new Date(reply.created), { addSuffix: true })}
 //                     </span>
-                    
+
 //                     {/* <span className="center__post__bottom-span-reply">
 //                       <span>
 //                       <i onClick={() => handleDeleteSpecificReply(post._id)} className="fas fa-ellipsis svg" ></i>
@@ -5800,7 +5800,7 @@
 //       ))}
 //     </section>
 //       )}
-    
+
 //     </>
 //   );
 // };
@@ -5826,8 +5826,10 @@ import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Swal from 'sweetalert2';  
+import Swal from 'sweetalert2';
 import Spinner from 'react-bootstrap/Spinner';
+import { Cloudinary } from "@cloudinary/url-gen";
+import CloudinaryUploadWidgetForPost from '../Profile/CloudinaryUploadWidgetForPost';
 
 const Home = () => {
   const [newPost, setNewPost] = useState('');
@@ -5839,11 +5841,35 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingReplies, setIsLoadingReplies] = useState(false);
 
-  const [followings, setNonFollowings] = useState([]);
-  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/followings`;
+  const [following, setNonFollowings] = useState([]);
+  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/following`;
 
 
-  
+  const [postPublicId, setPostPublicId] = useState("");
+  const [cloudName] = useState("dvkh03fhr");
+  const [uploadPreset] = useState("ml_default");
+
+  const [uwConfigPost] = useState({
+    cloudName,
+    uploadPreset,
+    // cropping: true, //add a cropping step
+    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
+    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
+    // multiple: true,  //restrict upload to a single file
+    // folder: "user_images", //upload files to the specified folder
+    // tags: ["users", "profile"], //add the given tags to the uploaded files
+    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
+    // clientAllowedFormats: ["images"], //restrict uploading to image files only
+    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
+    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
+    // theme: "purple", //change to a purple theme
+  });
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName
+    }
+  });
+
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -5895,6 +5921,8 @@ const Home = () => {
     try {
       const response = await axios.get(`http://localhost:4005/posts`);
       dispatch(setPostsAction(response.data.reverse()));
+      const latestPost = localStorage.getItem('imagesPost') || '';
+      localStorage.removeItem('images');
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
@@ -5919,18 +5947,20 @@ const Home = () => {
     }
   };
 
-  const handleImageSelect = (e) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-  };
+  // const handleImageSelect = (e) => {
+  //   const file = e.target.files[0];
+  //   setImageFile(file);
+  // };
 
-  
+
 
   const handlePost = async () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post('http://localhost:4005/posts/addPost', {
         title: newPost,
+        image: cld.image(postPublicId).toURL(),
+        imagePublicId: postPublicId,
       }, {
         headers: {
           Authorization: token,
@@ -6063,37 +6093,38 @@ const Home = () => {
         <section>
           <ToastContainer />
           <div className="center__happen">
-         <div className="center__happen__top">
-          <img src={userData && userData.profilePicture} alt="" />
-           <input
-            type="text"
-            placeholder="What's happening?!"
-            value={newPost}
-            onChange={(e) => setNewPost(e.target.value)}
-          />
-        </div>
-        {imageFile && (
-          <img
-            src={URL.createObjectURL(imageFile)}
-            alt="Selected"
-            style={{ maxWidth: '100%', marginTop: '10px' }}
-          />
-        )}
-        <div className="center__happen__bottom">
-          <div className="center__happen__bottom-icons">
-            <span>
-              <label htmlFor="imageInput">
-                <FontAwesomeIcon icon={faImage} className="happenIcon" />
-              </label>
+            <div className="center__happen__top">
+              <img src={userData && userData.profilePicture} alt="" />
               <input
+                type="text"
+                placeholder="What's happening?!"
+                value={newPost}
+                onChange={(e) => setNewPost(e.target.value)}
+              />
+            </div>
+            {imageFile && (
+              <img
+                src={URL.createObjectURL(imageFile)}
+                alt="Selected"
+                style={{ maxWidth: '100%', marginTop: '10px' }}
+              />
+            )}
+            <div className="center__happen__bottom">
+              <div className="center__happen__bottom-icons">
+                <span>
+                  <label htmlFor="imageInput">
+                    {/* <FontAwesomeIcon icon={faImage} className="happenIcon" /> */}
+                    <CloudinaryUploadWidgetForPost uwConfigPost={uwConfigPost} setPostPublicId={setPostPublicId} />
+                  </label>
+                  {/* <input
                 id="imageInput"
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
                 onChange={handleImageSelect}
-              />
-            </span>
-            {/* <span>
+              /> */}
+                </span>
+                {/* <span>
               <FontAwesomeIcon icon={faSquare} className="happenIcon" />
             </span>
             <span>
@@ -6105,115 +6136,126 @@ const Home = () => {
             <span>
               <FontAwesomeIcon icon={faLocationDot} className="happenIcon" />
             </span> */}
-          </div>
-          <button className="center__happen__bottom-btn" onClick={handlePost}>
-            Post
-          </button>
-        </div>
-      </div>
-
-      {allPosts && allPosts.map((post) => (
-  <div className="center__post" key={post._id}>
-    <div className="center__post__header">
-      <div className="center__post__header-left">
-        {post.userId && post.userId.profilePicture && (
-          <img src={post.userId.profilePicture} alt="" />
-        )}
-        <span className="center__post__header-left__name">
-          {post.userId && post.userId.name}
-        </span>
-        <span className="center__post__header-left__user">
-          @{post.userId && post.userId.username} . {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-        </span>
-      </div>
-            <div className="center__post__header-right">
-              <span>
-                {post.userId && post.userId._id === localStorage.getItem('ID') && (
-                  <span className="center__post__bottom-span">
-                    <i onClick={() => handleDeleteSpecificPost(post._id)} className="fas fa-ellipsis svg" ></i>
-                  </span>
-                )}
-              </span>
+              </div>
+              <button className="center__happen__bottom-btn" onClick={handlePost}>
+                Post
+              </button>
             </div>
           </div>
-          <div className="center__post__body">
-            <span className="center__post__body__content">{post.title}</span>
-          </div>
-          <div className="center__post__bottom">
-            <span className="center__post__bottom-span" onClick={() => handleCommentClick(post._id)}>
-              <FontAwesomeIcon icon={faComment} />
-            </span>
-            <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
-              <FontAwesomeIcon
-                icon={faRetweet}
-                style={{
-                  color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID'))
-                    ? 'green'
-                    : 'gray',
-                }}
-              />
-              {post.reposts.length > 0 && post.reposts.length}
-            </span>
-            <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
-              <FontAwesomeIcon
-                style={{ color: post.likes.some(like => like.userId === localStorage.getItem("ID")) ? 'red' : 'gray' }}
-                icon={faHeart}
-              />
-              {post.likes.length > 0 && post.likes.length}
-            </span>
-            {/* <span className="center__post__bottom-span">
+
+          {allPosts && allPosts.map((post) => (
+            <div className="center__post" key={post._id}>
+              <div className="center__post__header">
+                <div className="center__post__header-left">
+                  {post.userId && post.userId.profilePicture && (
+                    <img src={post.userId.profilePicture} alt="" />
+                  )}
+                  <span className="center__post__header-left__name">
+                    {post.userId && post.userId.name}
+                  </span>
+                  <span className="center__post__header-left__user">
+                    @{post.userId && post.userId.username} . {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+                  </span>
+                </div>
+                <div className="center__post__header-right">
+                  <span>
+                    {post.userId && post.userId._id === localStorage.getItem('ID') && (
+                      <span className="center__post__bottom-span">
+                        <i onClick={() => handleDeleteSpecificPost(post._id)} className="fas fa-ellipsis svg" ></i>
+                      </span>
+                    )}
+                  </span>
+                </div>
+              </div>
+              <div className="center__post__body">
+                <span className="center__post__body__content">{post.title}</span>
+                <div>
+                  {post.image && (
+                    <img
+                      src={post.image}
+                      alt="Post Image"
+                      style={{ Width: 'auto', height: 'auto', marginTop: '10px', paddingTop: '0px' }}
+                      className='container-fluid'
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="center__post__bottom">
+                <span className="center__post__bottom-span" onClick={() => handleCommentClick(post._id)}>
+                  <FontAwesomeIcon icon={faComment} />
+                </span>
+                <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+                  <FontAwesomeIcon
+                    icon={faRetweet}
+                    style={{
+                      color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID'))
+                        ? 'green'
+                        : 'gray',
+                    }}
+                  />
+                  {post.reposts.length > 0 && post.reposts.length}
+                </span>
+                <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+                  <FontAwesomeIcon
+                    style={{ color: post.likes.some(like => like.userId === localStorage.getItem("ID")) ? 'red' : 'gray' }}
+                    icon={faHeart}
+                  />
+                  {post.likes.length > 0 && post.likes.length}
+                </span>
+                {/* <span className="center__post__bottom-span">
               <FontAwesomeIcon icon={faChartBar} />
             </span>
             <span className="center__post__bottom-span">
               <FontAwesomeIcon icon={faArrowUp} />
             </span> */}
-            <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
-              <FontAwesomeIcon icon={faBookmark}
-                style={{
-                  color: post.saved.some(savedPost => savedPost.userId === localStorage.getItem('ID'))
-                    ? 'yellow'
-                    : 'gray',
-                }}
-              />
-            </span>
-          </div>
-          {selectedPost === post._id && (
-            <div>
-              <div className='reply-input-container'>
-                <input
-                  className='reply-input'
-                  type="text"
-                  placeholder="Post your reply"
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                />
-                <button className='reply-button' onClick={handleReply}>Reply</button>
+                <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
+                  <FontAwesomeIcon icon={faBookmark}
+                    style={{
+                      color: post.saved.some(savedPost => savedPost.userId === localStorage.getItem('ID'))
+                        ? 'yellow'
+                        : 'gray',
+                    }}
+                  />
+                </span>
               </div>
-              {Array.isArray(replies) && replies.map((reply) => (
-                <div className='reply-container' key={reply._id}>
-                  <div className="center__post__header-left">
-                    <img src={reply.postedBy.profilePicture} alt="" />
-                    <span className="center__post__header-left__name">
-                      {reply.postedBy.name}
-                    </span>
-                    <span className="center__post__header-left__user">
-                      @{reply.postedBy.username} . {formatDistanceToNow(new Date(reply.created), { addSuffix: true })}
-                    </span>
-                    
-                    {/* <span className="center__post__bottom-span-reply">
+              {selectedPost === post._id && (
+                <div>
+                  <div className='reply-input-container'>
+                    <input
+                      className='reply-input'
+                      type="text"
+                      placeholder="Post your reply"
+                      value={replyText}
+                      onChange={(e) => setReplyText(e.target.value)}
+                    />
+                    <button className='reply-button' onClick={handleReply}>Reply</button>
+                  </div>
+                  {Array.isArray(replies) && replies.map((reply) => (
+                    <div className='reply-container' key={reply._id}>
+                      <div className="center__post__header-left">
+                        <img src={reply.postedBy.profilePicture} alt="" />
+                        <span className="center__post__header-left__name">
+                          {reply.postedBy.name}
+                        </span>
+                        <span className="center__post__header-left__user">
+                          @{reply.postedBy.username} . {formatDistanceToNow(new Date(reply.created), { addSuffix: true })}
+                        </span>
+
+                        {/* <span className="center__post__bottom-span-reply">
                       <span>
                       <i onClick={() => handleDeleteSpecificReply(post._id)} className="fas fa-ellipsis svg" ></i>
 
                       </span>
                     </span> */}
-                  </div>
-                  <span className='reply-text'>{reply.text}</span>
+                      </div>
+                      <span className='reply-text'>{reply.text}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          )}
-        </div>
-      ))}
+          ))}
 
           {/* {isLoadingReplies && (
             <div className="loader-container">

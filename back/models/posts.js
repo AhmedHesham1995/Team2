@@ -93,6 +93,9 @@ const postsSchema = mongoose.Schema({
     image: {
         type: String, 
       },
+      imagePublicId: {
+        type: String,
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
