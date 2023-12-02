@@ -598,20 +598,20 @@ const Navbar = () => {
           </li>
           <li className="home__nav__li">
             <NavLink to="/lists" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faListUl} />
+              <FontAwesomeIcon className="svg" icon={faUserGroup} />
               Find friends
             </NavLink>
             <NavLink to="/lists" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faListUl} />
+              <FontAwesomeIcon className="svg" icon={faUserGroup} />
             </NavLink>
           </li>
           <li className="home__nav__li">
             <NavLink to="/communities" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faUserGroup} />
-              Communities
+              <FontAwesomeIcon className="svg" icon={faXTwitter}/>
+                Community
             </NavLink>
             <NavLink to="/communities" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faUserGroup} />
+              <FontAwesomeIcon className="svg" icon={faXTwitter} />
             </NavLink>
           </li>
           {/* <li className="home__nav__li">
@@ -673,7 +673,7 @@ const Navbar = () => {
           </div>
           <div className="home__nav__profile__name">
             <div>{userData && userData.name}</div>
-            <span>{userData && userData.username}</span>
+            <span>@{userData && userData.username}</span>
           </div>
           <div className="home__nav__profile__svg">
             <i className="fa-solid fa-ellipsis svg"></i>

@@ -47,7 +47,7 @@ const HomeNav = () => {
         const followingsData = followingsResponse.data.followings;
   
         // Filter out users who are already followed
-        const nonFollowings = allUsers.filter(user =>
+        const nonFollowings = allUsers.filter(user => user._id !== localStorage.getItem('ID')).filter(user =>
           !followingsData.some(following => following._id === user._id)
         );
   
@@ -149,7 +149,7 @@ const HomeNav = () => {
               <div className="right__container">
                 <h4 className="right__container__h4">Who to follow</h4>
 
-                {Array.isArray(followings) ? (
+                {/* {Array.isArray(followings) ? (
                   followings.slice(0, 4).map((following) => (
                     <div key={following._id} className="right__container__who">
                       <div className="right__container__who__left">
@@ -177,7 +177,40 @@ const HomeNav = () => {
                   ))
                 ) : (
                   <p>No followings available</p>
-                )}
+                )} */}
+
+
+        {Array.isArray(followings) ? (
+                followings.slice(0, 4).map((following) => (
+                  <div key={following._id} className="right__container__who">
+                    <div className="right__container__who__left">
+                      <div className="right__container__who__left-img">
+                        <img src={following.profilePicture} alt="" />
+                      </div>
+                      <div className="right__container__who__left-name">
+                        <div>{following.name}</div>
+                        <span>@{following.username}</span>
+                      </div>
+                    </div>
+                    <div className="right__container__who__right">
+                      <button
+                        className={`right__container__who__right-btn ${
+                          following.followStatus ? 'following' : 'not-following'
+                        }`}
+                        onClick={() =>
+                          following.followStatus
+                            ? handleUnfollowToggle(following._id)
+                            : handleFollowToggle(following._id)
+                        }
+                      >
+                        {following.followStatus ? 'Following' : 'Follow'}
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No followings available</p>
+              )}
               </div>
             </section>
           </Col>

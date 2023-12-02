@@ -1761,3 +1761,57 @@ hr {
 .loader-spinner {
   z-index: 9999;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*follow*/
+
+/* Your existing styles... */
+
+/* .right__container__who__right-btn {
+  color: #1da1f2;
+  background-color: transparent;
+  border: 1px solid #1da1f2;
+}
+
+.right__container__who__right-btn.following {
+  color: white;
+  background-color: #202327;
+  border: 1px solid white;
+} */
+
+
+
+
+
+/* Your existing styles... */
+
+.right__container__who__right-btn {
+  /* Your existing styles... */
+  color: #1da1f2;
+  background-color: transparent;
+  border: 1px solid #1da1f2;
+}
+
+.right__container__who__right-btn.following {
+  color: #1da1f2;
+  background-color: transparent;
+  border: 1px solid #1da1f2;
+}
+
+.right__container__who__right-btn.not-following {
+  /* Add the styles you want for the "not-following" state here */
+  color: black;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 5px 20px;
+  border: 1px solid #fff;
+}
