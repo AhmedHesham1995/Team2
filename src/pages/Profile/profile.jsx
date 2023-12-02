@@ -461,11 +461,18 @@ const Profile = () => {
             </div>
 
             <div className="center__header__divs text-light ">
-            <div>
+              <div>
                  <NavLink
                   className={({isActive}) => (isActive) ? "left" : ""}
                   style={({isActive}) => (isActive) ? {color: "white" , textDecoration:"none"} : {color : "gray" , textDecoration:"none"}}
                   to="/profile/"><span>Posts</span> </NavLink>
+              </div>
+
+              <div>
+                 <NavLink
+                  className={({isActive}) => (isActive) ? "left" : ""}
+                  style={({isActive}) => (isActive) ? {color: "white" , textDecoration:"none"} : {color : "gray" , textDecoration:"none"}}
+                  to="/profile/reposts"><span>Reposts</span> </NavLink>
               </div>
 
               <div>

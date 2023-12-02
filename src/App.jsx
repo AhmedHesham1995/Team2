@@ -35,7 +35,7 @@ import { Provider, useSelector } from "react-redux";
 import store from './redux/store'
 import EditProfile from "./pages/Profile/EditProfile/EditProfile";
 import ProfileSaved from "./pages/Profile/profileSaved";
-
+import ProfileReposts from "./pages/Profile/profileReposts";
 import EmailVerify from "./pages/emailVerify";
 
 
@@ -99,6 +99,7 @@ function App() {
             { path: "media", element: <ProfileMedia /> },
             { path: "likes", element: <ProfileLikes /> },
             { path: "saves", element: <ProfileSaved /> },
+            { path: "reposts", element: <ProfileReposts /> },
           ],
         },
         { path: "communities", element: <Protected><Communities /></Protected> },

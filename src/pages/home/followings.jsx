@@ -671,11 +671,13 @@ const Followings = () => {
   })
   console.log(followingsIds);
 
+   followingsIds.push(localStorage.getItem("ID"))
 
-  const filteredPosts = allPosts.filter(post => followingsIds.includes(post.userId._id));
+  // const filteredPosts = allPosts.filter(post => followingsIds.includes(post.userId._id));
   // console.log(filteredPosts);
   // console.log(followings);
-  
+  const filteredPosts = allPosts.filter(post => post.userId && followingsIds.includes(post.userId._id));
+
 
   return (
     <>

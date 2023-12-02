@@ -119,7 +119,8 @@ const postsSchema = mongoose.Schema({
           userId: {
             type: Schema.Types.ObjectId,
             ref: 'User'
-          }
+          },
+          created: { type: Date, default: Date.now },
         }
       ],
       saved: [
