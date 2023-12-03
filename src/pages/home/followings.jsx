@@ -443,7 +443,7 @@ const Followings = () => {
   const [isLoadingReplies, setIsLoadingReplies] = useState(false);
 
   const [followings, setFollowings] = useState([]);
-  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/followings`;
+  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/following`;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -460,7 +460,7 @@ const Followings = () => {
         },
       });
   
-      setFollowings(response.data.followings); // Assuming the response contains an array of user IDs that the logged-in user is following.
+      setFollowings(response.data.following); // Assuming the response contains an array of user IDs that the logged-in user is following.
       // console.log(response.data.followings);
     } catch (error) {
       console.error('Error fetching followings:', error);
@@ -666,18 +666,28 @@ const Followings = () => {
   };
 
 
-  let followingsIds=followings.map((e)=>{
-    return e._id
-  })
-  console.log(followingsIds);
+  // let followingsIds=followings.map((e)=>{
+  //   return e._id
+  // })
+  // console.log(followingsIds);
+
+  let followingsIds = [];
+  console.log(followings);
+if (followings) {
+  followingsIds = followings.map((e) => {
+    return e._id;
+  });
+}
 
    followingsIds.push(localStorage.getItem("ID"))
+
+   console.log(followingsIds);
 
   // const filteredPosts = allPosts.filter(post => followingsIds.includes(post.userId._id));
   // console.log(filteredPosts);
   // console.log(followings);
+  // const filteredPosts = allPosts.filter(post => post.userId && followingsIds.includes(post.userId._id));
   const filteredPosts = allPosts.filter(post => post.userId && followingsIds.includes(post.userId._id));
-
 
   return (
     <>
@@ -753,8 +763,18 @@ const Followings = () => {
                 </div>
               </div>
               <div className="center__post__body">
-                <span className="center__post__body__content">{post.title}</span>
-              </div>
+              <span className="center__post__body__content">{post.title}</span>
+              <div>
+                  {post.image && (
+                    <img
+                      src={post.image}
+                      alt="Post Image"
+                      style={{ Width: 'auto', height: 'auto' ,marginTop: '10px', paddingTop: '0px'}}
+                      className='container-fluid'
+                      />
+                      )}
+                </div>
+            </div>
               <div className="center__post__bottom">
                 <span className="center__post__bottom-span" onClick={() => handleCommentClick(post._id)}>
                   <FontAwesomeIcon icon={faComment} />

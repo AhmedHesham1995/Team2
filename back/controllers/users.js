@@ -7,6 +7,7 @@ const sendMail = require ('../utils/sendEmail')
 const crypto = require ('crypto')
 const express=require('express')
 var router=express.Router()
+
 const getAllUsers=async(req,res)=>{
     try{
         let users=await usersModel.find({})
@@ -77,7 +78,7 @@ const getOneUser=async(req,res)=>{
     let userId=req.params.id
     try{
         let wanted=await usersModel.findOne({_id:userId})
-        console.log(wanted);
+        // console.log(wanted);
         res.status(200).json({message:"s",data:wanted})
     }
     catch(err){
@@ -139,60 +140,6 @@ const posts4specificUser=async(req,res)=>{
     }
 }
 
-
-
-
-// const follow = async (req, res) => {
-//     try {
-//         const { userId } = req.params;
-
-//         const user = await usersModel.findById(userId);
-//         if (user.followers.includes(req.id)) {
-//             return res.status(400).json({ message: 'You are already following this user' });
-//         }
-
-//         await usersModel.findByIdAndUpdate(
-//             userId,
-//             { $push: { followers: req.id } },
-//             { new: true }
-//         );
-
-//         const result = await usersModel.findByIdAndUpdate(
-//             req.id,
-//             { $push: { following: userId } },
-//             { new: true }
-//         );
-
-//         res.json(result);
-//     } catch (error) {
-//         return res.status(422).json({ error: error.message });
-//     }
-// };
-
-
-// const unfollow = async (req, res) => {
-//     try {
-//         const { unfollowId } = req.params;
-
-//         await usersModel.findByIdAndUpdate(
-//             unfollowId,
-//             { $pull: { followers: req.id } },
-//             { new: true }
-//         );
-
-//         const result = await usersModel.findByIdAndUpdate(
-//             req.id,
-//             { $pull: { following: unfollowId } },
-//             { new: true }
-//         )
-
-//         res.json(result);
-//     } catch (error) {
-//         return res.status(422).json({ error: error.message });
-//     }
-// };
-
-
 const follow = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -210,7 +157,7 @@ const follow = async (req, res) => {
 
         const result = await usersModel.findByIdAndUpdate(
             req.id,
-            { $push: { followings: userId } },
+            { $push: { following: userId } },
             { new: true }
         );
 
@@ -219,6 +166,7 @@ const follow = async (req, res) => {
         return res.status(422).json({ error: error.message });
     }
 };
+
 
 const unfollow = async (req, res) => {
     try {
@@ -232,9 +180,9 @@ const unfollow = async (req, res) => {
 
         const result = await usersModel.findByIdAndUpdate(
             req.id,
-            { $pull: { followings: unfollowId } },
+            { $pull: { following: unfollowId } },
             { new: true }
-        );
+        )
 
         res.json(result);
     } catch (error) {
@@ -242,13 +190,11 @@ const unfollow = async (req, res) => {
     }
 };
 
-
-
 const getFollowers = async (req, res) => {
     try {
         // const userId = req.params.id;
         const userId = req.id;
-        const user = await usersModel.findById(userId).populate('followers', 'name  profilePicture username');
+        const user = await usersModel.findById(userId).populate('followers', 'name  profilePicture');
         res.status(200).json({ followers: user.followers });
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -259,8 +205,8 @@ const getFollowing = async (req, res) => {
     try {
         // const userId = req.params.id;
         const userId = req.id;
-        const user = await usersModel.findById(userId).populate('followings', 'name profilePicture username');
-        res.status(200).json({ followings: user.followings });
+        const user = await usersModel.findById(userId).populate('following', 'name profilePicture');
+        res.status(200).json({ following: user.following });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -273,14 +219,14 @@ const getFollowState = async (req, res) => {
 
         const isFollowing = await usersModel.findById(loggedInUserId)
             .select('following')
-            .then(user => user.followings.includes(userId));
+            .then(user => user.following.includes(userId));
 
-        res.json({ followings: isFollowing });
+        res.json({ following: isFollowing });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
 };
-  
+
 
 
 
@@ -300,22 +246,22 @@ async function login(req,res){
 
     const isValid=await bcrypt.compare(password,user.password)
     if(!isValid){
-        return res.status(401).json({message:"invalid password"})
-    }
-    if (!user.verified) {
-        let token = await Token.findOne({ userId: user._id });
-        if (!token) {
-            token = await new Token({
-                userId: user._id,
-                token: crypto.randomBytes(32).toString("hex"),
-            }).save();
-            const url = `http://localhost:5173/users/${user.id}/verify/${token.token}`;
-            await sendMail(user.email, "Verify Email", url);
-        }
+    //     return res.status(401).json({message:"invalid password"})
+    // }
+    // if (!user.verified) {
+    //     let token = await Token.findOne({ userId: user._id });
+    //     if (!token) {
+    //         token = await new Token({
+    //             userId: user._id,
+    //             token: crypto.randomBytes(32).toString("hex"),
+    //         }).save();
+    //         const url = `http://localhost:5173/users/${user.id}/verify/${token.token}`;
+    //         await sendMail(user.email, "Verify Email", url);
+    //     }
 
-        return res
-            .status(400)
-            .send({ message: "An Email sent to your account please verify" });
+    //     return res
+    //         .status(400)
+    //         .send({ message: "An Email sent to your account please verify" });
     }
 
     //generate token
@@ -347,4 +293,7 @@ async function loginDashboard(req,res){
     res.status(200).json({token:token, id:user._id})
 }
 
-module.exports={loginDashboard ,toggleUserStatus,verifyEmail,getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser,unfollow,getFollowers,getFollowing,getFollowState,follow}
+module.exports={loginDashboard ,toggleUserStatus,verifyEmail,getAllUsers,addUser,getOneUser,updateUser,deleteUser,login,posts4specificUser,follow,
+    unfollow,
+    getFollowers,
+    getFollowing,getFollowState}

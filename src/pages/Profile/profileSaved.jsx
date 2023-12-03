@@ -1505,6 +1505,16 @@ const ProfileSaved = () => {
             </div>
             <div className="center__post__body">
               <span className="center__post__body__content">{post.title}</span>
+              <div>
+                  {post.image && (
+                    <img
+                      src={post.image}
+                      alt="Post Image"
+                      style={{ Width: 'auto', height: 'auto' ,marginTop: '10px', paddingTop: '0px'}}
+                      className='container-fluid'
+                      />
+                      )}
+                </div>
             </div>
             <div className="center__post__bottom">
               <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>

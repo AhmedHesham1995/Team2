@@ -140,8 +140,8 @@
 } */
 
 .home__nav__profile__img img {
-  max-width: 40px;
-  max-height: 40px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
 
 }
@@ -1434,7 +1434,8 @@
 .cover-picture {
   /* background: url('./assets/img2.jpg') center no-repeat #f0f0f0; */
   width: 100%;
-  height: auto;
+  max-height: 250px;
+  object-fit: cover;
 }
 
 .profile-name {

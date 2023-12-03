@@ -124,7 +124,7 @@ const usersSchema = mongoose.Schema({
         type: String,
     },
     followers:[{type:ObjectId,ref:"User"}],
-    followings:[{type:ObjectId,ref:"User"}],
+    following:[{type:ObjectId,ref:"User"}],
     dob: Date,
     verified : {
         type:Boolean ,

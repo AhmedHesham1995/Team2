@@ -86,7 +86,7 @@ router.get('/:id/posts',posts4specificUser)
 router.put('/follow/:userId',auth, follow);
 router.put('/unfollow/:unfollowId',auth, unfollow);
 router.get('/:id/followers', auth, getFollowers)
-router.get('/:id/followings', auth, getFollowing)
+router.get('/:id/following', auth, getFollowing)
 router.get('/:userId/follow-state', auth, getFollowState);
 
 

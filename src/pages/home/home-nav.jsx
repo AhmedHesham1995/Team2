@@ -10,8 +10,9 @@ import axios from "axios";
 const HomeNav = () => {
 
   const [user, setUser] = useState({});
-  const [followings, setNonFollowings] = useState([]);
-  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/followings`;
+  const [following, setNonFollowings] = useState([]);
+  // const apiUrlFollowings = `http://localhost:4005/users/following`;
+  const apiUrlFollowings = `http://localhost:4005/users/${localStorage.getItem('ID')}/following`;
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -44,7 +45,7 @@ const HomeNav = () => {
           },
         });
   
-        const followingsData = followingsResponse.data.followings;
+        const followingsData = followingsResponse.data.following;
   
         // Filter out users who are already followed
         const nonFollowings = allUsers.filter(user => user._id !== localStorage.getItem('ID')).filter(user =>
@@ -73,9 +74,9 @@ const HomeNav = () => {
             Authorization: `${authToken}`,
           },
         }
-      );
+        );
 
-      const updatedFollowings = followings.map((following) =>
+      const updatedFollowings = following.map((following) =>
         following._id === followingId
           ? { ...following, followStatus: !following.followStatus }
           : following
@@ -100,7 +101,7 @@ const HomeNav = () => {
         }
       );
 
-      const updatedFollowings = followings.map((following) =>
+      const updatedFollowings = following.map((following) =>
         following._id === followingId
           ? { ...following, followStatus: !following.followStatus }
           : following
@@ -180,8 +181,8 @@ const HomeNav = () => {
                 )} */}
 
 
-        {Array.isArray(followings) ? (
-                followings.slice(0, 4).map((following) => (
+        {Array.isArray(following) ? (
+                following.slice(0, 4).map((following) => (
                   <div key={following._id} className="right__container__who">
                     <div className="right__container__who__left">
                       <div className="right__container__who__left-img">
