@@ -486,51 +486,295 @@
 
 
 
-import React from "react";
+// import React from "react";
+// import { NavLink, useNavigate } from "react-router-dom";
+// import { Container, Row } from "react-bootstrap";
+// import logo from "../../../assets/logo-white.png";
+// import h from "../../../assets/h.jpg";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faHouse,
+//   faMagnifyingGlass,
+//   faBell,
+//   faEnvelope,
+//   faListUl,
+//   faUserGroup,
+//   faFeatherPointed,
+//   faUser,
+//   faEllipsis,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
+// import { useContext } from "react";
+// import { authContext } from "../../../contexts/authContext";
+// import { useState } from "react";
+// import axios from "axios";
+// import { Modal, Button } from 'react-bootstrap';
+
+// const Navbar = () => {
+
+//   const {isLogin,setLogin} = useContext(authContext)
+
+//   const navigate=useNavigate()
+
+//   const [userData, setUserData] = useState(null);
+//   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+//   const getUser = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem("ID")}`);
+//       var userData=response.data.data;
+//       // console.log(userData);
+//       setUserData(userData)
+//       // console.log("user");
+//     } catch (error) {
+//       console.error('Error get user:', error);
+//     }
+//   };
+//   getUser()
+
+//   const handleLogout = () => {
+//     setLogin(false);
+//     localStorage.removeItem('token');
+//     navigate('/signIn');
+//   };
+
+//   const confirmLogout = () => {
+//     setShowLogoutModal(true);
+//   };
+
+//   const handleCloseLogoutModal = () => {
+//     setShowLogoutModal(false);
+//   };
+
+//   const handleConfirmLogout = () => {
+//     handleLogout();
+//     handleCloseLogoutModal();
+//   };
+
+//   return (
+//     <div className="navbar home">
+//       <nav className="home__nav">
+//         <div className="home__icon__img">
+//           <NavLink to="/home">
+//             <img className="home__icon" src={logo} alt="" />
+//           </NavLink>
+//         </div>
+//         <ul className="home__nav__ul">
+//           <li className="home__nav__li">
+//             <NavLink to="/home" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faHouse} />
+//               Home
+//             </NavLink>
+//             <NavLink to="/home" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faHouse} />
+//             </NavLink>
+//           </li>
+//           {/* <li className="home__nav__li">
+//             <NavLink to="/explore" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
+//               Explore
+//             </NavLink>
+//             <NavLink to="/explore" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
+//             </NavLink>
+//           </li> */}
+//           <li className="home__nav__li">
+//             <NavLink to="/notifications" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faBell} />
+//               Notifications
+//             </NavLink>
+//             <NavLink to="/notifications" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faBell} />
+//             </NavLink>
+//           </li>
+//           <li className="home__nav__li">
+//             <NavLink to="/messages" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faEnvelope} />
+//               Messages
+//             </NavLink>
+//             <NavLink to="/messages" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faEnvelope} />
+//             </NavLink>
+//           </li>
+//           <li className="home__nav__li">
+//             <NavLink to="/lists" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faUserGroup} />
+//               Find friends
+//             </NavLink>
+//             <NavLink to="/lists" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faUserGroup} />
+//             </NavLink>
+//           </li>
+//           <li className="home__nav__li">
+//             <NavLink to="/communities" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter}/>
+//                 Community
+//             </NavLink>
+//             <NavLink to="/communities" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+//             </NavLink>
+//           </li>
+//           {/* <li className="home__nav__li">
+//             <NavLink to="/verified" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+//               Verified
+//             </NavLink>
+//             <NavLink to="/verified" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+//             </NavLink>
+//           </li> */}
+//           <li className="home__nav__li">
+//             <NavLink to="/profile" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faUser} />
+//               Profile
+//             </NavLink>
+//             <NavLink to="/profile" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faUser} />
+//             </NavLink>
+//           </li>
+//           {/* <li className="home__nav__li">
+//             <NavLink to="/more" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faEllipsis} />
+//               More
+//             </NavLink>
+//             <NavLink to="/more" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faEllipsis} />
+//             </NavLink>
+//           </li> */}
+//         </ul>
+//         <button className="home__nav__btn">Post</button>
+//         <button className="home__nav__btn-hidden">
+//           <FontAwesomeIcon className="tweet" icon={faFeatherPointed} />
+//         </button>
+
+
+
+
+
+//         {/* <div className="home__nav__profile">
+//           <div className="home__nav__profile__img">
+//             <img src={h} alt="" />
+//           </div>
+//           <div className="home__nav__profile__name">
+//             <div>Ahmed Hesham</div>
+//             <span>@ahmed10_hesh...</span>
+//           </div>
+//           <div className="home__nav__profile__svg">
+//             <i className="fa-solid fa-ellipsis svg"></i>
+//           </div>
+//         </div>
+//         <div className="home__nav__profile-hidden">
+//           <img src={h} alt="" />
+//         </div> */}
+
+//         {(isLogin)&&<><div onClick={confirmLogout} className="home__nav__profile">
+//           <div className="home__nav__profile__img">
+//             <img src={userData && userData.profilePicture} alt="" />
+//           </div>
+//           <div className="home__nav__profile__name">
+//             <div>{userData && userData.name}</div>
+//             <span>@{userData && userData.username}</span>
+//           </div>
+//           <div className="home__nav__profile__svg">
+//             <i className="fa-solid fa-ellipsis svg"></i>
+//           </div>
+//         </div>
+//         <div onClick={confirmLogout} className="home__nav__profile-hidden">
+//               <img src={userData && userData.profilePicture} alt="" />
+//             </div></>}
+//         <Modal show={showLogoutModal} onHide={handleCloseLogoutModal}>
+//           <Modal.Header closeButton>
+//             <Modal.Title>Confirm Logout</Modal.Title>
+//           </Modal.Header>
+//           <Modal.Body>Are you sure you want to logout?</Modal.Body>
+//           <Modal.Footer>
+//             <Button variant="secondary" onClick={handleCloseLogoutModal}>
+//               Cancel
+//             </Button>
+//             <Button variant="primary" onClick={handleConfirmLogout}>
+//               Logout
+//             </Button>
+//           </Modal.Footer>
+//         </Modal>
+
+//       </nav>
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useState, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
-import logo from "../../../assets/logo-white.png";
-import h from "../../../assets/h.jpg";
+import { Container, Row, Modal, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
-  faMagnifyingGlass,
   faBell,
   faEnvelope,
-  faListUl,
   faUserGroup,
   faFeatherPointed,
   faUser,
   faEllipsis,
+  
 } from "@fortawesome/free-solid-svg-icons";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
-import { useContext } from "react";
-import { authContext } from "../../../contexts/authContext";
-import { useState } from "react";
 import axios from "axios";
-import { Modal, Button } from 'react-bootstrap';
+
+import { authContext } from "../../../contexts/authContext";
+
+import logo from "../../../assets/logo-white.png"; // Add this line for the logo import
 
 const Navbar = () => {
-
-  const {isLogin,setLogin} = useContext(authContext)
-
-  const navigate=useNavigate()
+  const { isLogin, setLogin } = useContext(authContext);
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [loadingUser, setLoadingUser] = useState(true);
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem("ID")}`);
-      var userData=response.data.data;
-      // console.log(userData);
-      setUserData(userData)
-      // console.log("user");
-    } catch (error) {
-      console.error('Error get user:', error);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4005/users/${localStorage.getItem("ID")}`);
+        const userData = response.data.data;
+        setUserData(userData);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+
+    if (isLogin) {
+      fetchUser();
     }
-  };
-  getUser()
+  }, [isLogin]);
 
   const handleLogout = () => {
     setLogin(false);
@@ -552,153 +796,141 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar home">
-      <nav className="home__nav">
-        <div className="home__icon__img">
-          <NavLink to="/home">
-            <img className="home__icon" src={logo} alt="" />
-          </NavLink>
-        </div>
-        <ul className="home__nav__ul">
-          <li className="home__nav__li">
-            <NavLink to="/home" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faHouse} />
-              Home
-            </NavLink>
-            <NavLink to="/home" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faHouse} />
-            </NavLink>
-          </li>
-          {/* <li className="home__nav__li">
-            <NavLink to="/explore" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
-              Explore
-            </NavLink>
-            <NavLink to="/explore" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
-            </NavLink>
-          </li> */}
-          <li className="home__nav__li">
-            <NavLink to="/notifications" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faBell} />
-              Notifications
-            </NavLink>
-            <NavLink to="/notifications" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faBell} />
-            </NavLink>
-          </li>
-          <li className="home__nav__li">
-            <NavLink to="/messages" className="home__nav__a">
+    <>
+      {isLogin && !loadingUser && (
+        <div className="navbar home">
+          <nav className="home__nav">
+            <div className="home__icon__img">
+              <NavLink to="/home">
+                <img className="home__icon" src={logo} alt="" />
+              </NavLink>
+            </div>
+            <ul className="home__nav__ul">
+           <li className="home__nav__li">
+             <NavLink to="/home" className="home__nav__a">
+               <FontAwesomeIcon className="svg" icon={faHouse} />
+               Home
+             </NavLink>
+             <NavLink to="/home" className="home__nav__a-hidden">
+               <FontAwesomeIcon className="svg" icon={faHouse} />
+             </NavLink>
+           </li>
+           {/* <li className="home__nav__li">
+//             <NavLink to="/explore" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
+//               Explore
+//             </NavLink>
+//             <NavLink to="/explore" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faMagnifyingGlass} />
+//             </NavLink>
+//           </li> */}
+           <li className="home__nav__li">
+             <NavLink to="/notifications" className="home__nav__a">
+               <FontAwesomeIcon className="svg" icon={faBell} />
+               Notifications
+             </NavLink>
+             <NavLink to="/notifications" className="home__nav__a-hidden">
+               <FontAwesomeIcon className="svg" icon={faBell} />
+             </NavLink>
+           </li>
+           <li className="home__nav__li">
+             <NavLink to="/messages" className="home__nav__a">
               <FontAwesomeIcon className="svg" icon={faEnvelope} />
-              Messages
-            </NavLink>
-            <NavLink to="/messages" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faEnvelope} />
-            </NavLink>
-          </li>
-          <li className="home__nav__li">
+               Messages
+             </NavLink>
+             <NavLink to="/messages" className="home__nav__a-hidden">
+               <FontAwesomeIcon className="svg" icon={faEnvelope} />
+             </NavLink>
+           </li>
+           <li className="home__nav__li">
             <NavLink to="/lists" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faUserGroup} />
-              Find friends
+               <FontAwesomeIcon className="svg" icon={faUserGroup} />
+               Find friends
+             </NavLink>
+             <NavLink to="/lists" className="home__nav__a-hidden">
+               <FontAwesomeIcon className="svg" icon={faUserGroup} />
             </NavLink>
-            <NavLink to="/lists" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faUserGroup} />
-            </NavLink>
-          </li>
-          <li className="home__nav__li">
-            <NavLink to="/communities" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faXTwitter}/>
-                Community
-            </NavLink>
-            <NavLink to="/communities" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faXTwitter} />
-            </NavLink>
-          </li>
-          {/* <li className="home__nav__li">
-            <NavLink to="/verified" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faXTwitter} />
-              Verified
-            </NavLink>
-            <NavLink to="/verified" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faXTwitter} />
-            </NavLink>
-          </li> */}
-          <li className="home__nav__li">
-            <NavLink to="/profile" className="home__nav__a">
+           </li>
+           <li className="home__nav__li">
+             <NavLink to="/communities" className="home__nav__a">
+               <FontAwesomeIcon className="svg" icon={faXTwitter}/>
+                 Community
+             </NavLink>
+             <NavLink to="/communities" className="home__nav__a-hidden">
+               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+             </NavLink>
+           </li>
+           {/* <li className="home__nav__li">
+//             <NavLink to="/verified" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+//               Verified
+//             </NavLink>
+//             <NavLink to="/verified" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faXTwitter} />
+//             </NavLink>
+//           </li> */}
+           <li className="home__nav__li">
+             <NavLink to="/profile" className="home__nav__a">
+               <FontAwesomeIcon className="svg" icon={faUser} />
+               Profile
+             </NavLink>
+             <NavLink to="/profile" className="home__nav__a-hidden">
               <FontAwesomeIcon className="svg" icon={faUser} />
-              Profile
-            </NavLink>
-            <NavLink to="/profile" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faUser} />
-            </NavLink>
-          </li>
-          {/* <li className="home__nav__li">
-            <NavLink to="/more" className="home__nav__a">
-              <FontAwesomeIcon className="svg" icon={faEllipsis} />
-              More
-            </NavLink>
-            <NavLink to="/more" className="home__nav__a-hidden">
-              <FontAwesomeIcon className="svg" icon={faEllipsis} />
-            </NavLink>
-          </li> */}
-        </ul>
-        <button className="home__nav__btn">Post</button>
-        <button className="home__nav__btn-hidden">
-          <FontAwesomeIcon className="tweet" icon={faFeatherPointed} />
-        </button>
+             </NavLink>
+           </li>
+           {/* <li className="home__nav__li">
+//             <NavLink to="/more" className="home__nav__a">
+//               <FontAwesomeIcon className="svg" icon={faEllipsis} />
+//               More
+//             </NavLink>
+//             <NavLink to="/more" className="home__nav__a-hidden">
+//               <FontAwesomeIcon className="svg" icon={faEllipsis} />
+//             </NavLink>
+//           </li> */}
+         </ul>
+            <button className="home__nav__btn">Post</button>
+            <button className="home__nav__btn-hidden">
+              <FontAwesomeIcon className="tweet" icon={faFeatherPointed} />
+            </button>
 
+            {isLogin && (
+              <>
+                <div onClick={confirmLogout} className="home__nav__profile">
+                  <div className="home__nav__profile__img">
+                    <img src={userData && userData.profilePicture} alt="" />
+                  </div>
+                  <div className="home__nav__profile__name">
+                    <div>{userData && userData.name}</div>
+                    <span>@{userData && userData.username}</span>
+                  </div>
+                  <div className="home__nav__profile__svg">
+                    <i className="fa-solid fa-ellipsis svg"></i>
+                  </div>
+                </div>
+                <div onClick={confirmLogout} className="home__nav__profile-hidden">
+                  <img src={userData && userData.profilePicture} alt="" />
+                </div>
+              </>
+            )}
 
-
-
-
-        {/* <div className="home__nav__profile">
-          <div className="home__nav__profile__img">
-            <img src={h} alt="" />
-          </div>
-          <div className="home__nav__profile__name">
-            <div>Ahmed Hesham</div>
-            <span>@ahmed10_hesh...</span>
-          </div>
-          <div className="home__nav__profile__svg">
-            <i className="fa-solid fa-ellipsis svg"></i>
-          </div>
+            <Modal show={showLogoutModal} onHide={handleCloseLogoutModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Logout</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Are you sure you want to logout?</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseLogoutModal}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={handleConfirmLogout}>
+                  Logout
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </nav>
         </div>
-        <div className="home__nav__profile-hidden">
-          <img src={h} alt="" />
-        </div> */}
-
-        {(isLogin)&&<><div onClick={confirmLogout} className="home__nav__profile">
-          <div className="home__nav__profile__img">
-            <img src={userData && userData.profilePicture} alt="" />
-          </div>
-          <div className="home__nav__profile__name">
-            <div>{userData && userData.name}</div>
-            <span>@{userData && userData.username}</span>
-          </div>
-          <div className="home__nav__profile__svg">
-            <i className="fa-solid fa-ellipsis svg"></i>
-          </div>
-        </div>
-        <div onClick={confirmLogout} className="home__nav__profile-hidden">
-              <img src={userData && userData.profilePicture} alt="" />
-            </div></>}
-        <Modal show={showLogoutModal} onHide={handleCloseLogoutModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Logout</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Are you sure you want to logout?</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseLogoutModal}>
-              Cancel
-            </Button>
-            <Button variant="primary" onClick={handleConfirmLogout}>
-              Logout
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-      </nav>
-    </div>
+      )}
+    </>
   );
 };
 

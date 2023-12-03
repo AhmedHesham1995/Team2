@@ -36,8 +36,8 @@ app.use(function (err, req, res, next) {
 });
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/twitterX-H")
-  // .connect('mongodb+srv://ahmedheshamTeam2:twitterClonePass@cluster0.dnj7z6t.mongodb.net/')
+  // .connect("mongodb://127.0.0.1:27017/twitterX-H")
+  .connect('mongodb+srv://ahmedheshamTeam2:twitterClonePass@cluster0.dnj7z6t.mongodb.net/')
 
   .then(() => {
     console.log("connected to database");

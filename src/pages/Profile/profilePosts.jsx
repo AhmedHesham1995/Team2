@@ -2038,7 +2038,7 @@ import { setPosts as setPostsAction } from '../../redux/slices/postsSlice';
 import { faComment, faRetweet, faHeart, faChartBar, faArrowUp, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Swal from 'sweetalert2'; // Import SweetAlert
+import Swal from 'sweetalert2'; 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
@@ -2107,11 +2107,9 @@ const ProfilePosts = () => {
       setReplyText('');
       fetchReplies(selectedPost);
 
-      // Show a success toast
       toast.success('Reply added successfully!');
     } catch (error) {
       console.error('Error replying to post:', error.message);
-      // Show an error toast
       toast.error('Error adding reply. Please try again.');
     }
   };
@@ -2232,6 +2230,11 @@ const ProfilePosts = () => {
   };
 
   const combinedPosts = [...posts, ...repostedPosts];
+
+  const sortedPosts = combinedPosts.sort((a, b) => new Date(b.createdAt))
+
+  console.log('combined',combinedPosts);
+  console.log('sorted',sortedPosts);
 
   return (
     <>

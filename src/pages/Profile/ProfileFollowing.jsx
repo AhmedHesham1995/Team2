@@ -5,6 +5,7 @@ import { Outlet, Link, NavLink } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../../components/big/navbar/navbar";
 import FollowPages from "../../components/medium/followPages";
+import Premium from "../../components/small/premium";
 
 const ProfileFollowing = () => {
     const userId = localStorage.getItem('ID');
@@ -113,6 +114,10 @@ const ProfileFollowing = () => {
                                 </li>
                             ))}
                         </ul>
+
+                        
+
+
                     </div>
                 </Col>
                 <Col
@@ -120,9 +125,9 @@ const ProfileFollowing = () => {
                 className="right"
                 style={{ backgroundColor: "black" }}
                 >
-                    <div className="right__container">
-                        <FollowPages />
-                    </div>
+                    <section className="right">
+                        <Premium/>
+                    </section>
                 </Col>
             </Row>
 

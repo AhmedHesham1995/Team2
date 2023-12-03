@@ -257,7 +257,7 @@ const Lists = () => {
         const loggedUserId = localStorage.getItem("ID");
 
         const followingsResponse = await axios.get(
-          `http://localhost:4005/users/${loggedUserId}/followings`,
+          `http://localhost:4005/users/${loggedUserId}/following`,
           {
             headers: {
               Authorization: `${authToken}`,
@@ -265,7 +265,7 @@ const Lists = () => {
           }
         );
 
-        const followingsData = followingsResponse.data.followings;
+        const followingsData = followingsResponse.data.following;
 
         const usersResponse = await axios.get(apiUrl, {
           headers: {
