@@ -356,7 +356,7 @@ const Lists = () => {
         <Col
           sm={12}
           md={6}
-          className="center"
+          className="center-1 center"
           style={{
             backgroundColor: "rgb(0, 0, 0)",
             border: "#c71818",

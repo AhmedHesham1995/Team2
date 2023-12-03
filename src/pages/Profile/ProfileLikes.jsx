@@ -1328,7 +1328,7 @@ const ProfileLikes = () => {
   const fetchLikedPosts = async () => {
     try {
       const response = await axios.get(`http://localhost:4005/posts/${userId}/likedPosts`);
-      setLikedPosts(response.data);
+      setLikedPosts(response.data.reverse());
     } catch (error) {
       console.error('Error fetching liked posts:', error);
     } finally {
@@ -1527,10 +1527,20 @@ const ProfileLikes = () => {
                 </div>
             </div>
             <div className="center__post__bottom">
-              <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
+              {/* <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
                 <FontAwesomeIcon icon={faComment} />
+              </span> */}
+
+          <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
+            <FontAwesomeIcon icon={faComment} style={{ color: post.replies.length > 0 ? '#1C96E8' : 'gray' }} />
+            {post.replies.length > 0 && (
+              <span style={{ color: '#1C96E8', marginLeft: '4px' }}>
+                {post.replies.length}
               </span>
-              <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+            )}
+          </span>
+
+              {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
                 <FontAwesomeIcon
                   icon={faRetweet}
                   style={{
@@ -1540,13 +1550,39 @@ const ProfileLikes = () => {
                   }}
                 />
                 {post.reposts.length > 0 && post.reposts.length}
-              </span>
-              <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+              </span> */}
+
+              <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
                 <FontAwesomeIcon
-                  style={{ color: post.likes.some(like => like.userId === localStorage.getItem("ID")) ? 'red' : 'gray' }}
+                  icon={faRetweet}
+                  style={{
+                    color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'gray',
+                  }}
+                />
+                {post.reposts.length > 0 && (
+                  <span style={{ color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'inherit', marginLeft: '4px' }}>
+                    {post.reposts.length}
+                  </span>
+                )}
+              </span>
+              {/* <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+                <FontAwesomeIcon
+                  style={{ color: post.likes.some(like => like.userId === localStorage.getItem("ID")) ? '#F91880' : 'gray' }}
                   icon={faHeart}
                 />
                 {post.likes.length > 0 && post.likes.length}
+              </span> */}
+
+              <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+                <FontAwesomeIcon
+                  style={{ color: post.likes.some(like => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'gray' }}
+                  icon={faHeart}
+                />
+                {post.likes.length > 0 && (
+                  <span style={{ color: post.likes.some(like => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'inherit', marginLeft: '4px' }}>
+                    {post.likes.length}
+                  </span>
+                )}
               </span>
               {/* <span className="center__post__bottom-span">
                 <FontAwesomeIcon icon={faChartBar} />
@@ -1554,13 +1590,21 @@ const ProfileLikes = () => {
               <span className="center__post__bottom-span">
                 <FontAwesomeIcon icon={faArrowUp} />
               </span> */}
-              <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
+              {/* <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
                 <FontAwesomeIcon
                   icon={faBookmark}
                   style={{
                     color: post.saved.some(savedPost => savedPost.userId === localStorage.getItem('ID'))
-                      ? 'yellow'
+                      ? '#1D9BF0'
                       : 'gray',
+                  }}
+                />
+              </span> */}
+              <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  style={{
+                    color: post.saved.some(save => save.userId === localStorage.getItem('ID')) ? '#FFD700' : 'gray',
                   }}
                 />
               </span>

@@ -131,7 +131,7 @@ const ProfileFollowers = () => {
                     <br/>
                     <hr  style={{ color: "white" }}/>
                     <br/>
-                    <div>
+                    <div className="center-1">
                         <ul className="user-followers">
                             {followers && followers.map((follower) => (
                                 <li className="user-every-follower" key={follower._id}>
@@ -171,7 +171,6 @@ const ProfileFollowers = () => {
                     
                         <section className="right">
                             <Premium/>
-                            
                         </section>
                 </Col>
             </Row>

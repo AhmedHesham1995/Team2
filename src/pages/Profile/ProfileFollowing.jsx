@@ -79,7 +79,8 @@ const ProfileFollowing = () => {
                     <br />
                     <hr style={{ color: "white" }} />
                     <br />
-                    <div>
+                    <div className="center-1">
+
                         {/* <h2
                             className="fo-head"
                         >Following: </h2> */}
