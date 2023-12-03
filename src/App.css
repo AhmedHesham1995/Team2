@@ -1816,3 +1816,73 @@ hr {
   padding: 5px 20px;
   border: 1px solid #fff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.row>* {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-top: var(--bs-gutter-y);
+}
+
+
+
+
+
+
+
+
+.center-1{
+  padding: 20px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
