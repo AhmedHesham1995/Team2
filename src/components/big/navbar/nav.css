@@ -1,0 +1,26 @@
+
+/* //// */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #414040;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .home__nav__li:hover .dropdown-content {
+    display: block;
+  }
+  
+  /* Style the dropdown items as needed */
+  .dropdown-content .home__nav__a-hidden {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #ebebeb;
+  }
+  
+  .dropdown-content .home__nav__a-hidden:hover {
+    background-color: #101010;
+  }

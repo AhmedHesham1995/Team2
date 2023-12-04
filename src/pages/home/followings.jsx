@@ -1370,6 +1370,7 @@ import Swal from 'sweetalert2';
 import Spinner from 'react-bootstrap/Spinner';
 import CloudinaryUploadWidgetForPost from '../Profile/CloudinaryUploadWidgetForPost';
 import { Cloudinary } from '@cloudinary/url-gen';
+import { useTranslation } from 'react-i18next';
 
 const Followings = () => {
   const [newPost, setNewPost] = useState('');
@@ -1380,10 +1381,10 @@ const Followings = () => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingReplies, setIsLoadingReplies] = useState(false);
-
   const [postPublicId, setPostPublicId] = useState("");
   const [cloudName] = useState("dvkh03fhr");
   const [uploadPreset] = useState("ml_default");
+  const {t} = useTranslation();
 
   const uwConfigPost = useMemo(
     () => ({
@@ -1421,7 +1422,6 @@ const Followings = () => {
       console.error('Error fetching followings:', error);
     }
   };
-
   useEffect(() => {
     fetchFollowings();
   }, []);
@@ -1633,7 +1633,6 @@ const Followings = () => {
   followingsIds.push(localStorage.getItem("ID"));
 
   const filteredPosts = allPosts.filter(post => post.userId && followingsIds.includes(post.userId._id));
-
   return (
     <>
       {isLoading ? (
@@ -1650,7 +1649,7 @@ const Followings = () => {
               <img src={userData && userData.profilePicture} alt="" />
               <input
                 type="text"
-                placeholder="What's happening?!"
+                placeholder={t('home.part11')}
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
               />
@@ -1671,7 +1670,7 @@ const Followings = () => {
                 </span>
               </div>
               <button className="center__happen__bottom-btn" onClick={handlePost}>
-                Post
+{t("side.part8")}
               </button>
             </div>
           </div>
@@ -1769,7 +1768,7 @@ const Followings = () => {
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                     />
-                    <button className='reply-button' onClick={handleReply}>Reply</button>
+                    <button className='reply-button' onClick={handleReply}>{t("home.part10")}</button>
                   </div>
                   {Array.isArray(replies) && replies.map((reply) => (
                     <div className='reply-container' key={reply._id}>

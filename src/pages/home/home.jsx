@@ -6338,6 +6338,7 @@ import Swal from 'sweetalert2';
 import CloudinaryUploadWidgetForPost from '../Profile/CloudinaryUploadWidgetForPost';
 import axios from 'axios';
 import { Cloudinary } from '@cloudinary/url-gen';
+import { useTranslation } from 'react-i18next';
 const Home = () => {
   const [newPost, setNewPost] = useState('');
   const [selectedPost, setSelectedPost] = useState(null);
@@ -6556,7 +6557,7 @@ const Home = () => {
       }
     }
   };
-
+const {t}=useTranslation()
   return (
     <>
       {isLoading ? (
@@ -6573,7 +6574,7 @@ const Home = () => {
               <img src={userData && userData.profilePicture} alt="" />
               <input
                 type="text"
-                placeholder="What's happening?!"
+                placeholder={t("home.part11")}
                 value={newPost}
                 onChange={(e) => setNewPost(e.target.value)}
               />
@@ -6587,7 +6588,7 @@ const Home = () => {
                 </span>
               </div>
               <button className="center__happen__bottom-btn" onClick={handlePost}>
-                Post
+                {t("side.part8")}
               </button>
             </div>
           </div>
@@ -6686,7 +6687,7 @@ const Home = () => {
                       value={replyText}
                       onChange={(e) => setReplyText(e.target.value)}
                     />
-                    <button className='reply-button' onClick={handleReply}>Reply</button>
+                    <button className='reply-button' onClick={handleReply}>{t("home.part10")}</button>
                   </div>
                   {Array.isArray(replies) && replies.map((reply) => (
                     <div className='reply-container' key={reply._id}>

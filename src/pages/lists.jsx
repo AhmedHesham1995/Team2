@@ -244,6 +244,7 @@ import Navbar from "../components/big/navbar/navbar";
 import { Col, Row } from "react-bootstrap";
 import axios from "axios";
 import Premium from "../components/small/premium";
+import { useTranslation } from "react-i18next";
 
 const Lists = () => {
   const [users, setUsers] = useState([]);
@@ -346,7 +347,7 @@ const Lists = () => {
       console.error("Error toggling unfollow:", error);
     }
   };
-
+const {t}=useTranslation()
   return (
     <div className="bodyprofile" style={{ color: "#fff" }}>
       <Row className="row">
@@ -367,7 +368,7 @@ const Lists = () => {
             className="col text-start h2"
             style={{ padding: "20px" }}
           >
-            People you may know
+            {t("home.part12")}
           </div>
 
           {/* {users.map((user) => (
@@ -418,7 +419,7 @@ const Lists = () => {
                         : handleFollowToggle(user._id)
                     }
                 >
-                    {user.followStatus ? 'Following' : 'Follow'}
+                    {user.followStatus ? t("home.part8") : t("home.part7")}
                 </button>
                 </div>
             </div>

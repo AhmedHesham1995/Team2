@@ -1,0 +1,49 @@
+{
+    "title":"sidebar",
+    "side": {
+          "part1": "Home",
+          "part2": "Notifications",
+          "part3": "Messages",
+          "part4": "Find Friends",
+          "part5": "Community",
+          "part6": "Profile",
+          "part7": "Language",
+          "part8":"Post",
+          "part9": "Confirm Logout",
+          "part10": "Are you sure you want to logout?",
+          "part11": "Cancel",
+          "part12": " Logout"
+        },
+     "home":{
+        "part1": "Home",
+        "part2": "For you",
+        "part3": "Followings",
+        "part4": "Who to follow",
+        "part5": "No followings available",
+        "part6": "Following",
+        "part7": "Follow",
+        "part8":"following",
+        "part9": "not-following",
+        "part10": "Reply",
+        "part11":"What's happening?",
+        "part12":"People you may know ",
+        "part13":"Followers",
+        "part14":"Unfollow",
+        "part15":"bio:",
+        "part16": "location:",
+        "part17":"birth Date:",
+        "part18":"Edit Profile",
+        "part19":"Reposts",
+        "part20":"Replies",
+        "part21":"Media",
+         "part22":"Likes",
+        "part23":"Saved",
+        "part24":"Who to follow"
+        },
+        "premium":{
+            "part1":"Subscribe to Premium",
+            "part2": " Subscribe to unlock new features and if eligible, receive a share of ads revenue. ",
+            "part3": "Subscribe"
+        }
+
+}

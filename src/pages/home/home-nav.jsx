@@ -7,6 +7,7 @@ import { faGear} from "@fortawesome/free-solid-svg-icons";
 import { Outlet , NavLink } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 const HomeNav = () => {
 
   const [user, setUser] = useState({});
@@ -87,6 +88,7 @@ const HomeNav = () => {
       console.error("Error toggling follow:", error);
     }
   };
+  const {t} = useTranslation();
 
   const handleUnfollowToggle = async (followingId) => {
     try {
@@ -123,7 +125,7 @@ const HomeNav = () => {
             <section className="center">
               <div className="center__header">
                 <div className="row mt-2 ms-2 ">
-                  <div className="col text-start h4">Home</div>
+                  <div className="col text-start h4">{t("home.part1")}</div>
                   {/* <div className="col text-end">
                   <FontAwesomeIcon icon={faGear} className="right-search-icon me-5" />
                   </div>  */}
@@ -132,10 +134,10 @@ const HomeNav = () => {
                 <div className="center__header__divs text-light ">
                 <div><NavLink className = {({isActive}) =>{return (isActive) ? "left" : "" }} 
                 style = {({isActive}) =>{ return (isActive) ? {color: "white" , textDecoration:"none"} : {color : "gray" , textDecoration:"none"}}}
-                to = "/home/"><span>For you</span> </NavLink></div>
+                to = "/home/"><span>{t("home.part2")}</span> </NavLink></div>
                 <div><NavLink className = {({isActive}) =>{return (isActive) ? "left": "" }}
                 style = {({isActive}) =>{ return (isActive) ? {color: "white" , textDecoration:"none"} : {color : "gray" , textDecoration:"none"}}}
-                 to = "/home/followings/"><span>Followings</span> </NavLink></div>
+                 to = "/home/followings/"><span>{t("home.part3")}</span> </NavLink></div>
                 <hr />
                 </div>
               </div>
@@ -148,7 +150,7 @@ const HomeNav = () => {
               <Premium />
 
               <div className="right__container">
-                <h4 className="right__container__h4">Who to follow</h4>
+                <h4 className="right__container__h4">{t("home.part4")}</h4>
 
                 {/* {Array.isArray(followings) ? (
                   followings.slice(0, 4).map((following) => (
@@ -196,7 +198,7 @@ const HomeNav = () => {
                     <div className="right__container__who__right">
                       <button
                         className={`right__container__who__right-btn ${
-                          following.followStatus ? 'following' : 'not-following'
+                          following.followStatus ? t("home.part8") : t("home.part9")
                         }`}
                         onClick={() =>
                           following.followStatus
@@ -204,13 +206,13 @@ const HomeNav = () => {
                             : handleFollowToggle(following._id)
                         }
                       >
-                        {following.followStatus ? 'Following' : 'Follow'}
+                        {following.followStatus ? t("home.part6") : t("home.part7")}
                       </button>
                     </div>
                   </div>
                 ))
               ) : (
-                <p>No followings available</p>
+                <p>{t("home.part5")}</p>
               )}
               </div>
             </section>

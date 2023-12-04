@@ -6,6 +6,7 @@ import { Col, Row } from "react-bootstrap";
 import Navbar from "../../components/big/navbar/navbar";
 import FollowPages from "../../components/medium/followPages";
 import Premium from "../../components/small/premium";
+import { useTranslation } from "react-i18next";
 
 const ProfileFollowing = () => {
     const userId = localStorage.getItem('ID');
@@ -47,7 +48,7 @@ const ProfileFollowing = () => {
             console.error('Error unfollowing user:', error.message);
         }
     };
-
+const {t}=useTranslation()
     return (
         <div className="bodyprofile">
             <Row className="row">
@@ -67,13 +68,13 @@ const ProfileFollowing = () => {
                     <div className="activities">
                         <NavLink style={({ isActive }) => {
                             return (isActive) ? { color: "white" } : { color: "gray" }
-                        }} to="/Profile"><span> Profile</span> </NavLink>
+                        }} to="/Profile"><span> {t("side.part6")}</span> </NavLink>
                         <NavLink style={({ isActive }) => {
                             return (isActive) ? { color: "white" } : { color: "gray" }
-                        }} to="/ProfileFollowers"><span> Followers</span> </NavLink>
+                        }} to="/ProfileFollowers"><span> {t("home.part13")}</span> </NavLink>
                         <NavLink style={({ isActive }) => {
                             return (isActive) ? { color: "white" } : { color: "gray" }
-                        }} to="/ProfileFollowing"><span> Following</span> </NavLink>
+                        }} to="/ProfileFollowing"><span>  {t("home.part8")}</span> </NavLink>
                     </div>
                     {/* <h2 className="fo-head">Followers: </h2> */}
                     <br />
@@ -110,7 +111,7 @@ const ProfileFollowing = () => {
                                         className=" btn btn-danger"
                                         onClick={() => handleUnfollow(followedUser._id)}
                                     >
-                                        Unfollow
+                                        {t("home.part14")}
                                     </button>
                                 </li>
                             ))}

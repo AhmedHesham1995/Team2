@@ -291,6 +291,7 @@ import axios from "axios";
 import Premium from "../../components/small/premium";
 import Navbar from "../../components/big/navbar/navbar";
 import "./profile.css";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -352,7 +353,7 @@ const Profile = () => {
       console.error(`Error toggling ${action}:`, error);
     }
   };
-
+const {t}=useTranslation()
   return (
     <div className="bodyprofile">
       <div key={user.userId}>
@@ -379,20 +380,20 @@ const Profile = () => {
                 <h4>{user.name}</h4>
                 <div className="user-profile-info-es">
                   <h6>
-                    <NavLink to='/profilefollowers' style={{ color: 'white' }}>Followers: {user.followers?.length}</NavLink>
+                    <NavLink to='/profilefollowers' style={{ color: 'white' }}>{t("home.part13")}: {user.followers?.length}</NavLink>
                   </h6>
                   <h6>
-                    <NavLink to='/profilefollowing' style={{ color: 'white' }}>Following: {user.following?.length}</NavLink>
+                    <NavLink to='/profilefollowing' style={{ color: 'white' }}>{t("home.part8")}: {user.following?.length}</NavLink>
                   </h6>
                   <h6>{user.email}</h6>
-                  <h6>bio: {user.bio}</h6>
-                  <h6>location: {user.location}</h6>
-                  <h6>birth Date: {user.birthDate}</h6>
+                  <h6>{t("home.part15")} {user.bio}</h6>
+                  <h6>{t("home.part16")} {user.location}</h6>
+                  <h6>{t("home.part17")} {user.birthDate}</h6>
                 </div>
               </div>
               <div className="edit-profile">
                 <button className="btn btn-dark">
-                  <NavLink to='/editProfile' style={{ color: 'white', textDecoration: 'none' }}>Edit profile</NavLink>
+                  <NavLink to='/editProfile' style={{ color: 'white', textDecoration: 'none' }}>{t("home.part18")}</NavLink>
                 </button>
               </div>
             </div>
@@ -401,37 +402,37 @@ const Profile = () => {
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/"><span>Posts</span> </NavLink>
+                  to="/profile/"><span>{t("side.part8")}</span> </NavLink>
               </div>
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/reposts"><span>Reposts</span> </NavLink>
+                  to="/profile/reposts"><span>{t("home.part19")}</span> </NavLink>
               </div>
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/replies"><span>Replies</span> </NavLink>
+                  to="/profile/replies"><span>{t("home.part20")}</span> </NavLink>
               </div>
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/media"><span>Media</span> </NavLink>
+                  to="/profile/media"><span>{t("home.part21")}</span> </NavLink>
               </div>
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/likes"><span>Likes</span> </NavLink>
+                  to="/profile/likes"><span>{t("home.part22")}</span> </NavLink>
               </div>
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/saves"><span>Saved</span> </NavLink>
+                  to="/profile/saves"><span>{t("home.part23")}</span> </NavLink>
               </div>
               <hr />
             </div>
@@ -441,7 +442,7 @@ const Profile = () => {
             <section className="right">
               <Premium />
               <div className="right__container">
-                <h4 className="right__container__h4">Who to follow</h4>
+                <h4 className="right__container__h4">{t("home.part24")}</h4>
                 {Array.isArray(following) ? (
                   following.slice(0, 4).map(following => (
                     <div key={following._id} className="right__container__who">
@@ -458,9 +459,9 @@ const Profile = () => {
                         <button
                           className={`right__container__who__right-btn ${following.followStatus ? 'following' : 'not-following'
                             }`}
-                          onClick={() => handleToggle(following._id, following.followStatus ? "unfollow" : "follow")}
+                          onClick={() => handleToggle(following._id, following.followStatus ? t('home.part14') : t('home.part7'))}
                         >
-                          {following.followStatus ? 'Following' : 'Follow'}
+                          {following.followStatus ? t('home.part8') : t('home.part7')}
                         </button>
                       </div>
                     </div>

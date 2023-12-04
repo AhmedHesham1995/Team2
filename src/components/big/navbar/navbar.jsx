@@ -954,6 +954,10 @@ import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import { authContext } from "../../../contexts/authContext";
 import logo from "../../../assets/logo-white.png";
+import { useTranslation } from "react-i18next";
+import i18n from "../../../../i18n";
+import "./nav.css";
+import { FaEarthAfrica } from "react-icons/fa6";
 
 // Memoized NavLink component
 const NavLinkMemoized = memo(NavLink);
@@ -965,6 +969,7 @@ const Navbar = () => {
   const [userData, setUserData] = useState({});
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [loadingUser, setLoadingUser] = useState(true);
+	const {lang, setLang} = useContext(authContext);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -1002,7 +1007,27 @@ const Navbar = () => {
     handleLogout();
     handleCloseLogoutModal();
   };
+//
+const {t} = useTranslation();
+const changeLanguage = (language) => {
+  i18n.changeLanguage(language);
+  if (language === "ar") {
+    setLang("ar");
+  } else {
+    setLang("en");
+  }
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+};
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const handleMouseEnter = () => {
+    setDropdownVisible(true);
+  };
 
+  const handleMouseLeave = () => {
+    setDropdownVisible(false);
+  };
+
+//
   return (
     <>
       {isLogin && !loadingUser && (
@@ -1017,7 +1042,7 @@ const Navbar = () => {
               <li className="home__nav__li">
                 <NavLinkMemoized to="/home" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faHouse} />
-                  Home
+             {t("side.part1")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/home" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faHouse} />
@@ -1026,7 +1051,7 @@ const Navbar = () => {
               <li className="home__nav__li">
                 <NavLinkMemoized to="/notifications" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faBell} />
-                  Notifications
+                  {t("side.part2")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/notifications" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faBell} />
@@ -1035,16 +1060,17 @@ const Navbar = () => {
               <li className="home__nav__li">
                 <NavLinkMemoized to="/messages" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faEnvelope} />
-                  Messages
+                  {t("side.part3")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/messages" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faEnvelope} />
                 </NavLinkMemoized>
               </li>
+        
               <li className="home__nav__li">
                 <NavLinkMemoized to="/lists" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faUserGroup} />
-                  Find friends
+                  {t("side.part4")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/lists" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faUserGroup} />
@@ -1053,7 +1079,7 @@ const Navbar = () => {
               <li className="home__nav__li">
                 <NavLinkMemoized to="/communities" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faXTwitter}/>
-                  Community
+                  {t("side.part5")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/communities" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faXTwitter} />
@@ -1062,14 +1088,62 @@ const Navbar = () => {
               <li className="home__nav__li">
                 <NavLinkMemoized to="/profile" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faUser} />
-                  Profile
+                  {t("side.part6")}
                 </NavLinkMemoized>
                 <NavLinkMemoized to="/profile" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faUser} />
                 </NavLinkMemoized>
               </li>
+              <li className="home__nav__li" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <NavLinkMemoized className="home__nav__a">
+        <FaEarthAfrica /> {t("side.part7")}
+
+      </NavLinkMemoized>
+      {isDropdownVisible && (
+        <div className="dropdown-content">
+          {/* Your dropdown content goes here */}
+          <NavLinkMemoized className="home__nav__a-hidden">
+           <p		onClick={() =>
+												changeLanguage(
+													"ar"
+												)
+											} ><input
+											type='radio'
+											id='arabic'
+											name='languge'
+											onClick={() =>
+												changeLanguage(
+													"ar"
+												)
+											}
+										/>Ar-العربية</p>
+          </NavLinkMemoized>
+          <NavLinkMemoized className="home__nav__a-hidden">
+          <p 	onClick={() =>
+												changeLanguage(
+													"en"
+												)
+											}><input
+											type='radio'
+											id='english'
+											name='languge'
+											onClick={() =>
+												changeLanguage(
+													"en"
+												)
+											}
+										/>EN-English</p>
+          </NavLinkMemoized>
+          {/* Add more items as needed */}
+        </div>
+      )}
+    </li>
             </ul>
-            <button className="home__nav__btn">Post</button>
+ 
+   
+
+
+            <button className="home__nav__btn"> {t("side.part8")}</button>
             <button className="home__nav__btn-hidden">
               <FontAwesomeIcon className="tweet" icon={faFeatherPointed} />
             </button>
@@ -1097,15 +1171,15 @@ const Navbar = () => {
             <Suspense fallback={<div>Loading...</div>}>
               <Modal show={showLogoutModal} onHide={handleCloseLogoutModal}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Confirm Logout</Modal.Title>
+                  <Modal.Title>{t("side.part9")}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Are you sure you want to logout?</Modal.Body>
+                <Modal.Body>{t("side.part10")}</Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleCloseLogoutModal}>
-                    Cancel
+                  {t("side.part11")}
                   </Button>
                   <Button variant="primary" onClick={handleConfirmLogout}>
-                    Logout
+                  {t("side.part12")}
                   </Button>
                 </Modal.Footer>
               </Modal>

@@ -19,7 +19,7 @@ import Communities from "./pages/communities";
 import Followings from "./pages/home/followings";
 import ProfilePosts from "./pages/Profile/profilePosts";
 import ProfileReplies from "./pages/Profile/profileReplies";
-import ProfileHighlights from "./pages/Profile/profileHighlights";
+// import ProfileHighlights from "./pages/Profile/profileHighlights";
 import ProfileMedia from "./pages/Profile/profileMedia";
 import ProfileLikes from "./pages/Profile/ProfileLikes";
 import Entertainment from "./pages/explore/entertainment";
@@ -118,6 +118,7 @@ function App() {
 
   const user = useSelector(data => data.user.userData)
   const [isLogin, setLogin] = useState((localStorage.getItem('token')) ? true : false)
+	const [lang, setLang] = useState("en");
 
   useEffect(() => {
     console.log(user);
@@ -130,7 +131,7 @@ function App() {
     // </AuthProvider>
 
     <Provider store={store}>
-      <AuthProvider value={{ isLogin, setLogin }}>
+      <AuthProvider value={{ isLogin, setLogin, lang, setLang }}>
         <RouterProvider router={router} >
           <Profile />
           <EditProfile />
