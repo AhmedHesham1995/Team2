@@ -2371,11 +2371,399 @@
 
 
 
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setPosts as setPostsAction } from '../../redux/slices/postsSlice';
+// import { faComment, faRetweet, faHeart, faBookmark } from '@fortawesome/free-solid-svg-icons';
+// import { formatDistanceToNow } from 'date-fns';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import Swal from 'sweetalert2';
+// import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import Spinner from 'react-bootstrap/Spinner';
+
+// const ProfilePosts = () => {
+//   const userId = localStorage.getItem('ID');
+//   const [repostedPosts, setRepostedPosts] = useState([]);
+//   const [selectedPost, setSelectedPost] = useState(null);
+//   const [replies, setReplies] = useState([]);
+//   const [replyText, setReplyText] = useState('');
+
+//   const [userData, setUserData] = useState(null);
+
+//   let Allposts = useSelector((state) => state.posts.posts);
+//   // console.log(Allposts);
+//   const dispatch = useDispatch();
+//   const posts = Allposts.filter((p) => p.userId && p.userId._id == localStorage.getItem('ID'));
+
+//   const [isLoading, setIsLoading] = useState(true);
+
+//   const fetchAndSetPosts = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:4005/posts`);
+//       dispatch(setPostsAction(response.data.reverse()));
+//       setIsLoading(false);
+//     } catch (error) {
+//       console.error('Error fetching posts:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchAndSetPosts();
+//   }, []);
+
+//   const fetchRepostedPosts = async () => {
+//     try {
+//       const response = await axios.get(`http://localhost:4005/posts/${userId}/reposted`);
+//       setRepostedPosts(response.data);
+//       // console.log(repostedPosts);
+//     } catch (error) {
+//       console.error('Error fetching liked posts:', error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchRepostedPosts();
+//   }, [userId]);
+
+//   const handleReplyClick = (postId) => {
+//     setSelectedPost(postId);
+//     fetchReplies(postId);
+//   };
+
+//   const handleReply = async () => {
+//     try {
+//       const token = localStorage.getItem('token');
+//       await axios.put(
+//         `http://localhost:4005/posts/replies`,
+//         { text: replyText, postId: selectedPost, userId: localStorage.getItem('ID') },
+//         {
+//           headers: {
+//             Authorization: token,
+//           },
+//         }
+//       );
+//       setReplyText('');
+//       fetchReplies(selectedPost);
+
+//       toast.success('Reply added successfully!');
+//     } catch (error) {
+//       console.error('Error replying to post:', error.message);
+//       toast.error('Error adding reply. Please try again.');
+//     }
+//   };
+
+//   const fetchUserDetails = async (userId) => {
+//     try {
+//       const response = await axios.get(`http://localhost:4005/users/${userId}`);
+//       return response.data.data;
+//     } catch (error) {
+//       console.error('Error fetching user details:', error);
+//       return null;
+//     }
+//   };
+
+//   const fetchReplyUserDetails = async (replies) => {
+//     const userDetailsPromises = replies.map(async (reply) => {
+//       const userDetails = await fetchUserDetails(reply.postedBy);
+//       return {
+//         ...reply,
+//         postedBy: userDetails,
+//       };
+//     });
+
+//     return Promise.all(userDetailsPromises);
+//   };
+
+//   const fetchReplies = async (postId) => {
+//     try {
+//       const response = await axios.get(`http://localhost:4005/posts/${postId}`);
+//       const repliesWithUserDetails = await fetchReplyUserDetails(response.data.replies);
+//       setReplies(repliesWithUserDetails);
+//     } catch (error) {
+//       console.error('Error fetching replies:', error);
+//     }
+//   };
+
+//   // const handleRepost = async (postId) => {
+//   //   try {
+//   //     const token = localStorage.getItem('token');
+//   //     await axios.post(
+//   //       'http://localhost:4005/posts/toggle-repost',
+//   //       { postId },
+//   //       {
+//   //         headers: {
+//   //           Authorization: token,
+//   //         },
+//   //       }
+//   //     );
+//   //     fetchRepostedPosts();
+//   //   } catch (error) {
+//   //     console.error('Error', error.message);
+//   //   }
+//   // };
+
+//   const handleLike = async (postId) => {
+//     try {
+//       const token = localStorage.getItem('token');
+//       await axios.post(
+//         'http://localhost:4005/posts/toggle-like',
+//         { postId },
+//         {
+//           headers: {
+//             Authorization: token,
+//           },
+//         }
+//       );
+//       fetchAndSetPosts();
+//     } catch (error) {
+//       console.error('Error', error.message);
+//     }
+//   };
+
+//   const handleDeletePost = async (postId) => {
+//     // Show SweetAlert confirmation
+//     const isConfirmed = await Swal.fire({
+//       title: 'Are you sure?',
+//       text: 'You will not be able to recover this post!',
+//       icon: 'warning',
+//       showCancelButton: true,
+//       confirmButtonText: 'Yes, delete it!',
+//       cancelButtonText: 'No, keep it',
+//       reverseButtons: true,
+//     });
+
+//     if (isConfirmed.isConfirmed) {
+//       try {
+//         await axios.delete(`http://localhost:4005/posts/${postId}`);
+//         fetchAndSetPosts();
+//         Swal.fire('Deleted!', 'Your post has been deleted.', 'success');
+//       } catch (error) {
+//         console.error('Error', error.message);
+//       }
+//     }
+//   };
+
+//   const handleSave = async (postId) => {
+//     try {
+//       const token = localStorage.getItem('token');
+//       await axios.post(
+//         'http://localhost:4005/posts/toggle-saved',
+//         { postId },
+//         {
+//           headers: {
+//             Authorization: token,
+//           },
+//         }
+//       );
+
+//       fetchAndSetPosts();
+
+//       // Show Toastify message for saved post
+//       toast.success('Post saved!');
+//     } catch (error) {
+//       console.error('Error', error.message);
+//     }
+//   };
+
+//   // const combinedPosts = [...posts, ...repostedPosts];
+
+//   // const sortedPosts = combinedPosts.sort((a, b) => new Date(b.createdAt))
+
+//   // console.log('combined',combinedPosts);
+//   // console.log('sorted',sortedPosts);
+
+//   return (
+//     <>
+//       <ToastContainer />
+//       {isLoading ? (
+//         <div className="loader-container">
+//           <Spinner animation="border" role="status" variant="primary">
+//             <span className="visually-hidden">Loading...</span>
+//           </Spinner>
+//         </div>
+//       ) : posts.length === 0 ? (
+//         <h1>No posts</h1>
+//       ) : (
+//         posts.map((post) => (
+//           <div className="center__post" key={post._id}>
+//             <div className="center__post__header">
+//               <div className="center__post__header-left">
+//                 <img src={post.userId.profilePicture} alt="" />
+//                 <span className="center__post__header-left__name">{post.userId && post.userId.name}</span>
+//                 <span className="center__post__header-left__user">
+//                   @{post.userId && post.userId.username} .{' '}
+//                   {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+//                 </span>
+//               </div>
+//               <div className="center__post__header-right">
+//                 {post.userId && post.userId._id === localStorage.getItem('ID') && (
+//                   <span>
+//                     <i onClick={() => handleDeletePost(post._id)} className="fas fa-ellipsis svg"></i>
+//                   </span>
+//                 )}
+//               </div>
+//             </div>
+//             <div className="center__post__body">
+//               <span className="center__post__body__content">{post.title}</span>
+//               <div>
+//                   {post.image && (
+//                     <img
+//                       src={post.image}
+//                       alt="Post Image"
+//                       style={{ Width: 'auto', height: 'auto' ,marginTop: '10px', paddingTop: '0px'}}
+//                       className='container-fluid'
+//                       />
+//                       )}
+//                 </div>
+//             </div>
+//             <div className="center__post__bottom">
+//               {/* <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
+//                 <FontAwesomeIcon icon={faComment} />
+//               </span> */}
+//               <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
+//                 <FontAwesomeIcon icon={faComment} style={{ color: post.replies.length > 0 ? '#1C96E8' : 'gray' }} />
+//                 {post.replies.length > 0 && (
+//                   <span style={{ color: '#1C96E8', marginLeft: '4px' }}>
+//                     {post.replies.length}
+//                   </span>
+//                 )}
+//               </span>
+
+//               {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+//                 <FontAwesomeIcon
+//                   icon={faRetweet}
+//                   style={{
+//                     color: post.reposts.some((repost) => repost.userId === localStorage.getItem('ID'))
+//                       ? 'green'
+//                       : 'gray',
+//                   }}
+//                 />
+//                 {post.reposts.length > 0 && post.reposts.length}
+//               </span> */}
+
+//               {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+//                 <FontAwesomeIcon
+//                   icon={faRetweet}
+//                   style={{
+//                     color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'gray',
+//                   }}
+//                 />
+//                 {post.reposts.length > 0 && (
+//                   <span style={{ color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'inherit', marginLeft: '4px' }}>
+//                     {post.reposts.length}
+//                   </span>
+//                 )}
+//               </span> */}
+//               {/* <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+//                 <FontAwesomeIcon
+//                   style={{
+//                     color: post.likes.some((like) => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'gray',
+//                   }}
+//                   icon={faHeart}
+//                 />
+//                 {post.likes.length > 0 && post.likes.length}
+//               </span> */}
+
+//               <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
+//                 <FontAwesomeIcon
+//                   style={{ color: post.likes.some(like => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'gray' }}
+//                   icon={faHeart}
+//                 />
+//                 {post.likes.length > 0 && (
+//                   <span style={{ color: post.likes.some(like => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'inherit', marginLeft: '4px' }}>
+//                     {post.likes.length}
+//                   </span>
+//                 )}
+//               </span>
+
+//               {/* <span className="center__post__bottom-span">
+//                 <FontAwesomeIcon icon={faChartBar} />
+//               </span>
+//               <span className="center__post__bottom-span">
+//                 <FontAwesomeIcon icon={faArrowUp} />
+//               </span> */}
+//               {/* <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
+//                 <FontAwesomeIcon
+//                   icon={faBookmark}
+//                   style={{
+//                     color: post.saved.some((savedPost) => savedPost.userId === localStorage.getItem('ID'))
+//                       ? '#1D9BF0'
+//                       : 'gray',
+//                   }}
+//                 />
+//               </span> */}
+//               <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
+//                 <FontAwesomeIcon
+//                   icon={faBookmark}
+//                   style={{
+//                     color: post.saved.some(save => save.userId === localStorage.getItem('ID')) ? '#FFD700' : 'gray',
+//                   }}
+//                 />
+//               </span>
+//             </div>
+//             {selectedPost === post._id && (
+//               <div>
+//                 <div className="reply-input-container">
+//                   <input
+//                     className="reply-input"
+//                     type="text"
+//                     placeholder="Post your reply"
+//                     value={replyText}
+//                     onChange={(e) => setReplyText(e.target.value)}
+//                   />
+//                   <button className="reply-button" onClick={handleReply}>
+//                     Reply
+//                   </button>
+//                 </div>
+//                 {Array.isArray(replies) &&
+//                   replies.map((reply) => (
+//                     <div className="reply-container" key={reply._id}>
+//                       <div className="center__post__header-left">
+//                         <img src={reply.postedBy.profilePicture} alt="" />
+//                         <span className="center__post__header-left__name">{reply.postedBy.name}</span>
+//                         <span className="center__post__header-left__user">
+//                           @{reply.postedBy.username} .{' '}
+//                           {formatDistanceToNow(new Date(reply.created), { addSuffix: true })}
+//                         </span>
+//                       </div>
+//                       <span className="reply-text">{reply.text}</span>
+//                     </div>
+//                   ))}
+//               </div>
+//             )}
+//           </div>
+//         ))
+//       )}
+//     </>
+//   );
+// };
+
+// export default ProfilePosts;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts as setPostsAction } from '../../redux/slices/postsSlice';
-import { faComment, faRetweet, faHeart, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faRetweet, faHeart, faBookmark,faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { formatDistanceToNow } from 'date-fns';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
@@ -2389,23 +2777,22 @@ const ProfilePosts = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [replies, setReplies] = useState([]);
   const [replyText, setReplyText] = useState('');
-
   const [userData, setUserData] = useState(null);
 
-  let Allposts = useSelector((state) => state.posts.posts);
-  console.log(Allposts);
-  const dispatch = useDispatch();
-  const posts = Allposts.filter((p) => p.userId && p.userId._id == localStorage.getItem('ID'));
-
   const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const Allposts = useSelector((state) => state.posts.posts);
+  const posts = Allposts.filter((p) => p.userId && p.userId._id == localStorage.getItem('ID'));
 
   const fetchAndSetPosts = async () => {
     try {
       const response = await axios.get(`http://localhost:4005/posts`);
       dispatch(setPostsAction(response.data.reverse()));
-      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching posts:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -2413,19 +2800,18 @@ const ProfilePosts = () => {
     fetchAndSetPosts();
   }, []);
 
-  const fetchRepostedPosts = async () => {
-    try {
-      const response = await axios.get(`http://localhost:4005/posts/${userId}/reposted`);
-      setRepostedPosts(response.data);
-      console.log(repostedPosts);
-    } catch (error) {
-      console.error('Error fetching liked posts:', error);
-    }
-  };
+  // const fetchRepostedPosts = async () => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:4005/posts/${userId}/reposted`);
+  //     setRepostedPosts(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching liked posts:', error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchRepostedPosts();
-  }, [userId]);
+  // useEffect(() => {
+  //   fetchRepostedPosts();
+  // }, [userId]);
 
   const handleReplyClick = (postId) => {
     setSelectedPost(postId);
@@ -2483,24 +2869,6 @@ const ProfilePosts = () => {
       setReplies(repliesWithUserDetails);
     } catch (error) {
       console.error('Error fetching replies:', error);
-    }
-  };
-
-  const handleRepost = async (postId) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        'http://localhost:4005/posts/toggle-repost',
-        { postId },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      fetchRepostedPosts();
-    } catch (error) {
-      console.error('Error', error.message);
     }
   };
 
@@ -2567,22 +2935,36 @@ const ProfilePosts = () => {
     }
   };
 
-  const combinedPosts = [...posts, ...repostedPosts];
+  const [showToTopButton, setShowToTopButton] = useState(false);
 
-  const sortedPosts = combinedPosts.sort((a, b) => new Date(b.createdAt))
+  const handleScroll = () => {
+    // Set showToTopButton to true if the user has scrolled down 300 pixels or more, otherwise set it to false.
+    setShowToTopButton(window.scrollY > 300);
+  };
 
-  console.log('combined',combinedPosts);
-  console.log('sorted',sortedPosts);
+  const handleToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
       <ToastContainer />
       {isLoading ? (
-        <div className="loader-container">
-          <Spinner animation="border" role="status" variant="primary">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <div className="loader-container-1">
+        <div className="loader-overlay" />
+        <Spinner className="loader-spinner" animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
       ) : posts.length === 0 ? (
         <h1>No posts</h1>
       ) : (
@@ -2614,14 +2996,11 @@ const ProfilePosts = () => {
                       alt="Post Image"
                       style={{ Width: 'auto', height: 'auto' ,marginTop: '10px', paddingTop: '0px'}}
                       className='container-fluid'
-                      />
-                      )}
+                    />
+                  )}
                 </div>
             </div>
             <div className="center__post__bottom">
-              {/* <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
-                <FontAwesomeIcon icon={faComment} />
-              </span> */}
               <span className="center__post__bottom-span" onClick={() => handleReplyClick(post._id)}>
                 <FontAwesomeIcon icon={faComment} style={{ color: post.replies.length > 0 ? '#1C96E8' : 'gray' }} />
                 {post.replies.length > 0 && (
@@ -2630,42 +3009,6 @@ const ProfilePosts = () => {
                   </span>
                 )}
               </span>
-
-              {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
-                <FontAwesomeIcon
-                  icon={faRetweet}
-                  style={{
-                    color: post.reposts.some((repost) => repost.userId === localStorage.getItem('ID'))
-                      ? 'green'
-                      : 'gray',
-                  }}
-                />
-                {post.reposts.length > 0 && post.reposts.length}
-              </span> */}
-
-              <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
-                <FontAwesomeIcon
-                  icon={faRetweet}
-                  style={{
-                    color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'gray',
-                  }}
-                />
-                {post.reposts.length > 0 && (
-                  <span style={{ color: post.reposts.some(repost => repost.userId === localStorage.getItem('ID')) ? '#00BA7C' : 'inherit', marginLeft: '4px' }}>
-                    {post.reposts.length}
-                  </span>
-                )}
-              </span>
-              {/* <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
-                <FontAwesomeIcon
-                  style={{
-                    color: post.likes.some((like) => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'gray',
-                  }}
-                  icon={faHeart}
-                />
-                {post.likes.length > 0 && post.likes.length}
-              </span> */}
-
               <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
                 <FontAwesomeIcon
                   style={{ color: post.likes.some(like => like.userId === localStorage.getItem('ID')) ? '#F91880' : 'gray' }}
@@ -2677,23 +3020,6 @@ const ProfilePosts = () => {
                   </span>
                 )}
               </span>
-
-              {/* <span className="center__post__bottom-span">
-                <FontAwesomeIcon icon={faChartBar} />
-              </span>
-              <span className="center__post__bottom-span">
-                <FontAwesomeIcon icon={faArrowUp} />
-              </span> */}
-              {/* <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
-                <FontAwesomeIcon
-                  icon={faBookmark}
-                  style={{
-                    color: post.saved.some((savedPost) => savedPost.userId === localStorage.getItem('ID'))
-                      ? '#1D9BF0'
-                      : 'gray',
-                  }}
-                />
-              </span> */}
               <span className="center__post__bottom-span" onClick={() => handleSave(post._id)}>
                 <FontAwesomeIcon
                   icon={faBookmark}
@@ -2735,6 +3061,11 @@ const ProfilePosts = () => {
             )}
           </div>
         ))
+      )}
+      {showToTopButton && (
+        <button className="to-top-button" onClick={handleToTopClick}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
       )}
     </>
   );

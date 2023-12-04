@@ -225,35 +225,131 @@ const toggleLike = async (req, res) => {
     }
 }
 
+// const toggleRepost = async (req, res) => {
+//     const { postId } = req.body;
+//     const userId = req.id;
+  
+//     try {
+//       const post = await postsModel.findById(postId);
+  
+//       if (!post) {
+//         return res.status(404).json({ message: 'Post not found' });
+//       }
+  
+//       const existingRepost = post.reposts.find((repost) => repost.userId.toString() === userId);
+  
+//       if (existingRepost) {
+//         // User already reposted the post, remove the repost
+//         post.reposts = post.reposts.filter((repost) => repost.userId.toString() !== userId);
+//       } else {
+//         // User hasn't reposted the post, add the repost
+//         post.reposts.push({ userId });
+//       }
+  
+//       await post.save();
+  
+//       res.status(200).json({ message: 'Repost toggled successfully', data: post });
+//     } catch (error) {
+//       console.error('Error toggling repost:', error);
+//       res.status(500).json({ message: 'Internal Server Error' });
+//     }
+//   };
+
+// controllers/postsController.js
+
+// ... (existing code)
+
+// const toggleRepost = async (req, res) => {
+//   const { postId } = req.body;
+//   const userId = req.id;
+
+//   try {
+//     const originalPost = await postsModel.findById(postId).populate('userId');
+
+//     if (!originalPost) {
+//       return res.status(404).json({ message: 'Original post not found' });
+//     }
+
+//     // Create a new post based on the original post
+//     const newPost = new postsModel({
+//       // Include the title field from the original post
+//       title: originalPost.title,
+
+//       // Copy other relevant fields from the original post
+//       content: originalPost.content,
+//       // ... (copy other relevant fields)
+
+//       // Change the user ID to the one reposting
+//       userId: userId,
+
+//       // Add information about the repost
+//       originalPost: {
+//         postId: originalPost._id,
+//         userId: originalPost.userId,
+//       },
+
+//       // ... (other fields, if any)
+//     });
+
+//     // Save the new post
+//     await newPost.save();
+
+//     res.status(200).json({ message: 'Repost created successfully', data: newPost });
+//   } catch (error) {
+//     console.error('Error creating repost:', error);
+//     res.status(500).json({ message: 'Internal Server Error' });
+//   }
+// };
+
+
 const toggleRepost = async (req, res) => {
-    const { postId } = req.body;
-    const userId = req.id;
-  
-    try {
-      const post = await postsModel.findById(postId);
-  
-      if (!post) {
-        return res.status(404).json({ message: 'Post not found' });
-      }
-  
-      const existingRepost = post.reposts.find((repost) => repost.userId.toString() === userId);
-  
-      if (existingRepost) {
-        // User already reposted the post, remove the repost
-        post.reposts = post.reposts.filter((repost) => repost.userId.toString() !== userId);
-      } else {
-        // User hasn't reposted the post, add the repost
-        post.reposts.push({ userId });
-      }
-  
-      await post.save();
-  
-      res.status(200).json({ message: 'Repost toggled successfully', data: post });
-    } catch (error) {
-      console.error('Error toggling repost:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  const { postId } = req.body;
+  const userId = req.id;
+
+  try {
+    // Use Mongoose's populate method to get the original post with user details
+    const originalPost = await postsModel.findById(postId).populate('userId');
+
+    if (!originalPost) {
+      return res.status(404).json({ message: 'Original post not found' });
     }
-  };
+
+    // Create a new post based on the original post
+    const newPostData = {
+      title: originalPost.title,
+      content: originalPost.content,
+      userId: userId,
+      originalPost: {
+        postId: originalPost._id,
+        userId: originalPost.userId,
+      },
+      // ... (other fields, if any)
+    };
+
+    // Include image details if the original post has an image
+    if (originalPost.image) {
+      newPostData.image = originalPost.image;
+      // Include other image-related fields if needed
+    }
+
+    const newPost = new postsModel(newPostData);
+
+    // Save the new post
+    await newPost.save();
+
+    res.status(200).json({ message: 'Repost created successfully', data: newPost });
+  } catch (error) {
+    console.error('Error creating repost:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
+
+
+
+
+
+
 
   const toggleSaved = async (req, res) => {
     const { postId } = req.body;

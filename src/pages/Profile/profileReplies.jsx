@@ -462,6 +462,26 @@ const ProfileReplies = () => {
     }
   };
 
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  const handleScroll = () => {
+    // Set showToTopButton to true if the user has scrolled down 300 pixels or more, otherwise set it to false.
+    setShowToTopButton(window.scrollY > 300);
+  };
+
+  const handleToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {isLoading ? (
@@ -496,6 +516,11 @@ const ProfileReplies = () => {
             </div>
           ))}
         </div>
+      )}
+      {showToTopButton && (
+        <button className="to-top-button" onClick={handleToTopClick}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
       )}
     </>
   );

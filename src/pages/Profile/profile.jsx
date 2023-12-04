@@ -404,12 +404,12 @@ const {t}=useTranslation()
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
                   to="/profile/"><span>{t("side.part8")}</span> </NavLink>
               </div>
-              <div>
+              {/* <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}
                   style={({ isActive }) => (isActive) ? { color: "white", textDecoration: "none" } : { color: "gray", textDecoration: "none" }}
-                  to="/profile/reposts"><span>{t("home.part19")}</span> </NavLink>
-              </div>
+                  to="/profile/reposts"><span>Reposts</span> </NavLink>
+              </div> */}
               <div>
                 <NavLink
                   className={({ isActive }) => (isActive) ? "left" : ""}

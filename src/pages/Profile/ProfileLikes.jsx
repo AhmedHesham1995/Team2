@@ -1401,23 +1401,23 @@ const ProfileLikes = () => {
     }
   };
 
-  const handleRepost = async (postId) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        'http://localhost:4005/posts/toggle-repost',
-        { postId },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      fetchLikedPosts();
-    } catch (error) {
-      console.error('Error', error.message);
-    }
-  };
+  // const handleRepost = async (postId) => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       'http://localhost:4005/posts/toggle-repost',
+  //       { postId },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     fetchLikedPosts();
+  //   } catch (error) {
+  //     console.error('Error', error.message);
+  //   }
+  // };
 
   const handleLike = async (postId) => {
     try {
@@ -1481,6 +1481,26 @@ const ProfileLikes = () => {
       }
     }
   };
+
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  const handleScroll = () => {
+    // Set showToTopButton to true if the user has scrolled down 300 pixels or more, otherwise set it to false.
+    setShowToTopButton(window.scrollY > 300);
+  };
+
+  const handleToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -1552,7 +1572,7 @@ const ProfileLikes = () => {
                 {post.reposts.length > 0 && post.reposts.length}
               </span> */}
 
-              <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+              {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
                 <FontAwesomeIcon
                   icon={faRetweet}
                   style={{
@@ -1564,7 +1584,7 @@ const ProfileLikes = () => {
                     {post.reposts.length}
                   </span>
                 )}
-              </span>
+              </span> */}
               {/* <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
                 <FontAwesomeIcon
                   style={{ color: post.likes.some(like => like.userId === localStorage.getItem("ID")) ? '#F91880' : 'gray' }}
@@ -1639,6 +1659,12 @@ const ProfileLikes = () => {
             )}
           </div>
         ))
+      )}
+
+      {showToTopButton && (
+        <button className="to-top-button" onClick={handleToTopClick}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
       )}
     </>
   );

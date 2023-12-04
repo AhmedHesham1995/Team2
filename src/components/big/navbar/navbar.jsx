@@ -1048,7 +1048,7 @@ const changeLanguage = (language) => {
                   <FontAwesomeIcon className="svg" icon={faHouse} />
                 </NavLinkMemoized>
               </li>
-              <li className="home__nav__li">
+              {/* <li className="home__nav__li">
                 <NavLinkMemoized to="/notifications" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faBell} />
                   {t("side.part2")}
@@ -1056,7 +1056,7 @@ const changeLanguage = (language) => {
                 <NavLinkMemoized to="/notifications" className="home__nav__a-hidden">
                   <FontAwesomeIcon className="svg" icon={faBell} />
                 </NavLinkMemoized>
-              </li>
+              </li> */}
               <li className="home__nav__li">
                 <NavLinkMemoized to="/messages" className="home__nav__a">
                   <FontAwesomeIcon className="svg" icon={faEnvelope} />

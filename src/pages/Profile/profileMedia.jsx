@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Spinner from 'react-bootstrap/Spinner';
+
+
 const ProfileMedia = () => {
   const userId = localStorage.getItem('ID');
   const [repostedPosts, setRepostedPosts] = useState([]);
@@ -19,7 +21,7 @@ const ProfileMedia = () => {
   const [userData, setUserData] = useState(null);
 
   let Allposts = useSelector((state) => state.posts.posts);
-  console.log(Allposts);
+  // console.log(Allposts);
   const dispatch = useDispatch();
   const posts = Allposts.filter((p) => p.userId && p.userId._id == localStorage.getItem('ID'));
 
@@ -112,24 +114,24 @@ const ProfileMedia = () => {
     }
   };
 
-  const handleRepost = async (postId) => {
-    try {
-      const token = localStorage.getItem('token');
-      await axios.post(
-        'http://localhost:4005/posts/toggle-repost',
-        { postId },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
-      // fetchAndSetPosts();
-      fetchRepostedPosts();
-    } catch (error) {
-      console.error('Error', error.message);
-    }
-  };
+  // const handleRepost = async (postId) => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       'http://localhost:4005/posts/toggle-repost',
+  //       { postId },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     // fetchAndSetPosts();
+  //     fetchRepostedPosts();
+  //   } catch (error) {
+  //     console.error('Error', error.message);
+  //   }
+  // };
 
   const handleLike = async (postId) => {
     try {
@@ -200,7 +202,27 @@ const ProfileMedia = () => {
 
   // console.log('combined',combinedPosts);
  
-  console.log(posts);
+  // console.log(posts);
+
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  const handleScroll = () => {
+    // Set showToTopButton to true if the user has scrolled down 300 pixels or more, otherwise set it to false.
+    setShowToTopButton(window.scrollY > 300);
+  };
+
+  const handleToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -272,7 +294,7 @@ const ProfileMedia = () => {
                 {post.reposts.length > 0 && post.reposts.length}
               </span> */}
 
-              <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+              {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
                 <FontAwesomeIcon
                   icon={faRetweet}
                   style={{
@@ -284,7 +306,7 @@ const ProfileMedia = () => {
                     {post.reposts.length}
                   </span>
                 )}
-              </span>
+              </span> */}
               {/* <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
                 <FontAwesomeIcon
                   style={{
@@ -363,6 +385,11 @@ const ProfileMedia = () => {
             )}
           </div>
         ))
+      )}
+      {showToTopButton && (
+        <button className="to-top-button" onClick={handleToTopClick}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
       )}
     </>
   );
