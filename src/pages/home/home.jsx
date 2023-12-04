@@ -6515,6 +6515,7 @@ const Home = () => {
   //     console.error('Error', error.message);
   //   }
   // };
+  const {t}=useTranslation()
 
   const handleSave = async (postId) => {
     try {

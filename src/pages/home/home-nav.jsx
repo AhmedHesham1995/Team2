@@ -114,6 +114,8 @@ const HomeNav = () => {
       console.error("Error toggling unfollow:", error);
     }
   };
+  // const {t}=useTranslation()
+
     return (
         <section className="home">
         <Row>

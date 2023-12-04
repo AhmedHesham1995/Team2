@@ -1662,7 +1662,7 @@ const Followings = () => {
       console.error('Error', error.message);
     }
   };
-
+// const {t}=useTranslation()
   const handleDeleteSpecificPost = async (postId) => {
     const isConfirmed = await Swal.fire({
       title: 'Are you sure?',
