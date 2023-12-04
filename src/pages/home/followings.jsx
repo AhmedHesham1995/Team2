@@ -1358,7 +1358,7 @@
 import React, { useState, useEffect, useCallback,useMemo } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faImage, faComment, faRetweet, faHeart, faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faImage, faComment, faRetweet, faHeart, faBookmark,faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToLikes, removeFromLikes } from '../../redux/slices/homeLikes';
 import { setPosts as setPostsAction } from '../../redux/slices/postsSlice';
@@ -1564,9 +1564,56 @@ const Followings = () => {
     }
   };
 
+  // const handleRepost = async (postId) => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       'http://localhost:4005/posts/toggle-repost',
+  //       { postId },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+  //     fetchAndSetPosts();
+  //   } catch (error) {
+  //     console.error('Error', error.message);
+  //   }
+  // };
+
+  // const handleRepost = async (postId) => {
+  //   try {
+  //     const token = localStorage.getItem('token');
+  //     await axios.post(
+  //       'http://localhost:4005/posts/toggle-repost',
+  //       { postId },
+  //       {
+  //         headers: {
+  //           Authorization: token,
+  //         },
+  //       }
+  //     );
+      
+  //     // Update user details and followings
+  //     await getUser();
+  //     await fetchFollowings();
+  //     // Fetch and set posts again
+  //     await fetchAndSetPosts();
+  //   } catch (error) {
+  //     console.error('Error', error.message);
+  //   }
+  // };
+
   const handleRepost = async (postId) => {
     try {
       const token = localStorage.getItem('token');
+      
+      // Fetch the original post data
+      const response = await axios.get(`http://localhost:4005/posts/${postId}`);
+      const originalPost = response.data;
+  
+      // Toggle the repost in the backend
       await axios.post(
         'http://localhost:4005/posts/toggle-repost',
         { postId },
@@ -1576,11 +1623,25 @@ const Followings = () => {
           },
         }
       );
-      fetchAndSetPosts();
+  
+      // Update user details and followings
+      await getUser();
+      await fetchFollowings();
+  
+      // Fetch and set posts again
+      await fetchAndSetPosts();
+  
+      // Show the original post data (you can navigate to a different page or use a modal)
+      console.log('Original Post:', originalPost);
+      // You may want to display the original post in a modal or navigate to a new page
+      // depending on your application's UI/UX design.
     } catch (error) {
       console.error('Error', error.message);
     }
   };
+  
+  
+  
 
   const handleSave = async (postId) => {
     try {
@@ -1634,14 +1695,36 @@ const Followings = () => {
 
   const filteredPosts = allPosts.filter(post => post.userId && followingsIds.includes(post.userId._id));
 
+
+  const [showToTopButton, setShowToTopButton] = useState(false);
+
+  const handleScroll = () => {
+    // Set showToTopButton to true if the user has scrolled down 300 pixels or more, otherwise set it to false.
+    setShowToTopButton(window.scrollY > 300);
+  };
+
+  const handleToTopClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {isLoading ? (
-        <div className="loader-container">
-          <Spinner animation="border" role="status" variant="primary">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
+        <div className="loader-container-1">
+        <div className="loader-overlay" />
+        <Spinner className="loader-spinner" animation="border" role="status" variant="primary">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
       ) : (
         <section>
           <ToastContainer />
@@ -1722,7 +1805,7 @@ const Followings = () => {
                   )}
                 </span>
 
-                <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
+                {/* <span className="center__post__bottom-span" onClick={() => handleRepost(post._id)}>
                   <FontAwesomeIcon
                     icon={faRetweet}
                     style={{
@@ -1736,7 +1819,7 @@ const Followings = () => {
                       {post.reposts.length}
                     </span>
                   )}
-                </span>
+                </span> */}
 
                 <span className="center__post__bottom-span" onClick={() => handleLike(post._id)}>
                   <FontAwesomeIcon
@@ -1789,6 +1872,12 @@ const Followings = () => {
               )}
             </div>
           ))}
+
+        {showToTopButton && (
+        <button className="to-top-button" onClick={handleToTopClick}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
+      )}
         </section>
       )}
     </>

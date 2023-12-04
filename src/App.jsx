@@ -79,15 +79,15 @@ function App() {
         },
 
         { path: "lists", element: <Protected><Lists /></Protected> },
-        {
-          path: "/notifications",
-          element: <Protected><Notification /></Protected>,
-          children: [
-            { index: true, element: <All /> },
-            { path: "mentions", element: <Mentions /> },
-            { path: "verified", element: <Verified /> },
-          ],
-        },
+        // {
+        //   path: "/notifications",
+        //   element: <Protected><Notification /></Protected>,
+        //   children: [
+        //     { index: true, element: <All /> },
+        //     { path: "mentions", element: <Mentions /> },
+        //     { path: "verified", element: <Verified /> },
+        //   ],
+        // },
         { path: "join", element: <Join /> },
         { path: "signUp", element: <SignUp /> },
         { path: "signIn", element: <SignIn /> },
